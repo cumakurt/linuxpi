@@ -1,6 +1,6 @@
 # LinuxPi (π)
 
-**Linux ayrıcalık yükseltme (privilege escalation) çerçevesi** — sistemdeki yükseltme vektörlerini kapsamlı analiz eder. **π** motifi, *C/d* oranını (çevre / çap) çağrıştırır: saldırı yüzeyini etkin ayrıcalık sınırlarıyla eşleştirme metaforu.
+Linux için ayrıcalık yükseltme (privilege escalation) çerçevesi sunar — sistemdeki yükseltme vektörlerini kapsamlı analiz eder.
 
 > **YASAL UYARI:** Bu araç **yalnızca yetkili penetrasyon testi ve güvenlik değerlendirmeleri** içindir. İzinsiz kullanım kesinlikle yasaktır.
 
