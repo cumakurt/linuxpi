@@ -1,0 +1,33 @@
+# Build outputs (reproducible with make)
+/build/
+/dist/
+
+# Local scan / report artifacts
+*.log
+linuxpi-report.*
+*-report.json
+*-report.html
+
+# Secrets and local config (never commit)
+.env
+.env.*
+*.pem
+*.key
+
+# Python (scripts/)
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+
+# Editor / OS
+*~
+*.swp
+.DS_Store
+Thumbs.db
+
+# Optional local tooling
+.idea/
+.vscode/
+*.bak

