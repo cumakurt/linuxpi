@@ -342,7 +342,11 @@ ADVANCED:
 
 ## License
 
-GPL v3
+This project is licensed under the [GNU General Public License v3.0](LICENSE) (GPL-3.0).
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for how to report vulnerabilities in LinuxPi itself.
 
 ## Developer
 

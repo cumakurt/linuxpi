@@ -224,7 +224,11 @@ curl -sL https://example.com/linuxpi.sh | bash -s -- --minimal -f json
 
 ## Lisans
 
-GPL v3
+[Lisans metni (GPL-3.0)](LICENSE) — GNU Genel Kamu Lisansı sürüm 3.
+
+## Güvenlik
+
+LinuxPi’nin kendisindeki güvenlik açıklarını bildirmek için: [SECURITY.md](SECURITY.md).
 
 ## Geliştirici
 
