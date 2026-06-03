@@ -49,10 +49,20 @@ _cred_block_heading() {
     [[ "${REPORT_FULL_SECRETS:-0}" == "1" ]] && echo "Credential capture (plaintext — UNSAFE)" || echo "Credential hints (redacted)"
 }
 
+_normalize_report_counters() {
+    [[ "${CRITICAL_COUNT:-}" =~ ^[0-9]+$ ]] || CRITICAL_COUNT=0
+    [[ "${HIGH_COUNT:-}" =~ ^[0-9]+$ ]] || HIGH_COUNT=0
+    [[ "${MEDIUM_COUNT:-}" =~ ^[0-9]+$ ]] || MEDIUM_COUNT=0
+    [[ "${LOW_COUNT:-}" =~ ^[0-9]+$ ]] || LOW_COUNT=0
+    [[ "${INFO_COUNT:-}" =~ ^[0-9]+$ ]] || INFO_COUNT=0
+}
+
 # ──────────────────────────────────────────────────────────────
 # Report entry point
 # ──────────────────────────────────────────────────────────────
 generate_report() {
+    _normalize_report_counters
+
     local format="${OUTPUT_FORMAT:-text}"
     local output_file="${OUTPUT_FILE:-}"
     local scan_end

@@ -26,7 +26,7 @@ linuxpi/
 │   ├── kernel/
 │   │   ├── kernel_enum.sh      # Kernel CVE, sysctl, module analysis
 │   │   ├── kernel_research.sh  # CONFIG/sysfs sysctl research context (KASLR, BPF, mitigations)
-│   │   └── kernel_exploits.db  # 61+ kernel CVE database
+│   │   └── kernel_exploits.db  # 67+ kernel CVE database
 │   ├── sudo/
 │   │   ├── sudo_enum.sh       # Sudo configuration, CVE, privilege analysis
 │   │   └── sudo_exploits.db   # 15+ sudo CVE database
@@ -46,7 +46,7 @@ linuxpi/
 │       └── security_enum.sh   # MAC, PATH hijack, shell profile, doas
 ├── database/
 │   ├── cve_database.json      # Structured CVE database
-│   ├── epss_scores.db         # EPSS + CVSS scoring database (60+ CVE)
+│   ├── epss_scores.db         # EPSS + CVSS scoring database (70+ CVE)
 │   ├── gtfobins.json          # GTFOBins mirror (~470+ binaries, jq)
 │   └── gtfobins_flat.db       # Same data, flat rows (no jq)
 ├── utils/
@@ -56,10 +56,13 @@ linuxpi/
 │   └── parser.sh              # Argument parsing, config
 ├── scripts/
 │   └── build_gtfobins_db.py   # Rebuild gtfobins.json from upstream YAML
+├── tests/
+│   ├── test_exploit_mode.sh   # Exploit engine unit tests
+│   └── test_kernel_matching.sh # Kernel CVE matching unit tests
 ├── output/
 │   └── templates/
 │       └── html_report.tpl    # SOC-grade HTML report template
-└── Makefile                   # Build: standalone, minimal, full, dist
+└── Makefile                   # Build, test, lint, release helpers
 ```
 
 ## Features
@@ -69,7 +72,7 @@ linuxpi/
 | Module | Description |
 |--------|-------------|
 | `user` | User context, group memberships, privilege token analysis |
-| `kernel` | Kernel CVE matching (61+ CVE), sysctl security, SMEP/SMAP/KASLR |
+| `kernel` | Kernel CVE matching (67+ CVE), sysctl security, SMEP/SMAP/KASLR |
 | `sudo` | Sudo version CVE, privilege parse, env_keep, NOPASSWD, Baron Samedit |
 | `suid` | SUID/SGID binary scan, GTFOBins matching, RPATH/RUNPATH hijacking |
 | `capabilities` | Linux capabilities analysis (14 dangerous capabilities) |
@@ -83,10 +86,27 @@ linuxpi/
 
 ### CVE Databases
 
-- **61+ Kernel CVE** (2010-2025): Dirty COW, Dirty Pipe, PwnKit, nf_tables UAF, io_uring, eBPF...
+- **67+ Kernel CVE** (2010-2026): Dirty COW, Dirty Pipe, PwnKit, nf_tables UAF, io_uring, eBPF, CopyFail, Dirty Frag, CIFSwitch...
 - **15+ Sudo CVE**: Baron Samedit, UID bypass, pwfeedback overflow...
-- **Polkit, glibc, snapd, runc** dedicated checks
+- **Polkit, glibc, snapd, runc, PackageKit, CIFS/cifs.upcall** dedicated checks
 - **GTFOBins** ([gtfobins.org](https://gtfobins.org/)): full mirror of documented techniques for **sudo**, **SUID**, and **capabilities** — primary exploit line plus extra techniques in evidence; refresh with `make update-gtfobins`
+
+### Recent 2026 LPE Coverage
+
+LinuxPi includes 2026 local privilege escalation checks observed in the March-June 2026 advisory window:
+
+| CVE / Name | Detection |
+|------------|-----------|
+| `CVE-2026-31431` CopyFail | Kernel stable-branch range plus AF_ALG / `algif_aead` context |
+| `CVE-2026-43284` Dirty Frag ESP | Kernel stable-branch range plus ESP/XFRM and user namespace context |
+| `CVE-2026-43500` Dirty Frag RxRPC | Kernel stable-branch range plus RxRPC config/module context |
+| `CVE-2026-46300` Fragnesia | Kernel stable-branch range plus ESP/XFRM context |
+| `CVE-2026-46333` ssh-keysign-pwn | Kernel stable-branch range plus ptrace and SUID/root helper context |
+| `CVE-2026-31635` DirtyDecrypt | Kernel stable-branch range plus RxRPC/RxGK context |
+| `CVE-2026-46243` CIFSwitch | CIFS module, `cifs.upcall`, `cifs.spnego` request-key chain |
+| `CVE-2026-41651` Pack2TheRoot | PackageKit version and service/tooling presence |
+
+For modern kernel advisories, LinuxPi stores affected ranges per stable branch instead of a single broad min/max window. This reduces false positives around patched stable releases while still surfacing runtime preconditions in evidence.
 
 ### EPSS + CVSS Priority Scoring
 
@@ -338,7 +358,19 @@ ADVANCED:
 
 - **Bash 4.0+** (recommended)
 - **Standard Linux tools**: `find`, `grep`, `awk`, `stat`, `id`
-- **Optional**: `jq` (faster GTFOBins / JSON queries), `PyYAML` + `git` (for `make update-gtfobins`), `curl` (cloud detection)
+- **Optional**: `jq` (faster GTFOBins / JSON queries), `PyYAML` + `git` (for `make update-gtfobins`), `curl` (cloud detection), `shellcheck` (linting)
+
+## Development and Tests
+
+```bash
+make check                       # Bash syntax validation
+make test                        # Syntax + unit tests + basic functional scan
+make shellcheck                  # Optional lint; prints a warning if shellcheck is unavailable
+bash tests/test_exploit_mode.sh
+bash tests/test_kernel_matching.sh
+```
+
+`make test` runs the exploit engine tests and kernel matcher boundary tests, then verifies `--help` and a quiet kernel scan.
 
 ## License
 

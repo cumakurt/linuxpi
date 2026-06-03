@@ -12,6 +12,7 @@ run_service_enum() {
     _check_writable_service_files
     _check_process_credentials
     _enum_installed_software
+    _check_packagekit_pack2theroot
 
     log_timing "service_enum" "$(elapsed_since "$start_ms")"
 }
@@ -171,7 +172,7 @@ _check_writable_service_files() {
                     "T1543.002"
                 echo -e "  ${BOLD_RED}[CRIT]${RESET} Writable service: ${service_file}"
             fi
-        done < <(find "$service_dir" -type f -name "*.service" -o -name "*.sh" 2>/dev/null | head -50)
+        done < <(find "$service_dir" -type f \( -name "*.service" -o -name "*.sh" \) 2>/dev/null | head -50)
     done
 }
 
@@ -247,5 +248,76 @@ _enum_installed_software() {
                 "https://attack.mitre.org/techniques/T1027/004/" \
                 "T1027.004"
         fi
+    fi
+}
+
+# ──────────────────────────────────────────────────────────────
+# PackageKit CVE-2026-41651 Pack2TheRoot check
+# ──────────────────────────────────────────────────────────────
+_normalize_pkg_semver() {
+    local out
+    out="$(echo "$1" | grep -oE '[0-9]+(\.[0-9]+){1,2}' | head -1 || true)"
+    echo "$out"
+}
+
+_packagekit_version() {
+    local raw=""
+
+    if cmd_exists packagekitd; then
+        raw="$(packagekitd --version 2>/dev/null | head -1)"
+        raw="$(_normalize_pkg_semver "$raw")"
+        [[ -n "$raw" ]] && { echo "$raw"; return; }
+    fi
+
+    if cmd_exists pkcon; then
+        raw="$(pkcon --version 2>/dev/null | head -1)"
+        raw="$(_normalize_pkg_semver "$raw")"
+        [[ -n "$raw" ]] && { echo "$raw"; return; }
+    fi
+
+    for pkg in PackageKit packagekit; do
+        raw="$(pkg_version "$pkg" 2>/dev/null | head -1)"
+        raw="$(_normalize_pkg_semver "$raw")"
+        [[ -n "$raw" ]] && { echo "$raw"; return; }
+    done
+}
+
+_check_packagekit_pack2theroot() {
+    cmd_exists packagekitd || cmd_exists pkcon || [[ -d /usr/share/PackageKit ]] || [[ -f /usr/lib/systemd/system/packagekit.service ]] || return
+
+    print_subsection "PackageKit Security"
+
+    local pk_ver service_state pkcon_path daemon_path
+    pk_ver="$(_packagekit_version)"
+    pkcon_path="$(command -v pkcon 2>/dev/null || echo n/a)"
+    daemon_path="$(command -v packagekitd 2>/dev/null || echo n/a)"
+
+    if cmd_exists systemctl; then
+        service_state="$(systemctl is-active packagekit.service 2>/dev/null || echo inactive)"
+    else
+        service_state="unknown"
+    fi
+
+    [[ -z "$pk_ver" ]] && {
+        add_finding "INFO" "services" "CVE-2026-41651" "PackageKit installed but version unknown" \
+            "PackageKit artifacts are present, but the scanner could not determine the version for CVE-2026-41651 assessment." \
+            "pkcon --version; packagekitd --version" \
+            "packagekitd=${daemon_path} ; pkcon=${pkcon_path} ; packagekit.service=${service_state}" \
+            "Check the vendor advisory and package changelog for CVE-2026-41651 fixes; prefer PackageKit >= 1.3.5 or vendor backport." \
+            "https://github.com/PackageKit/PackageKit/security/advisories/GHSA-f55j-vvr9-69xv ; https://nvd.nist.gov/vuln/detail/CVE-2026-41651" \
+            "T1068"
+        return
+    }
+
+    echo -e "  ${CYAN}[INFO]${RESET} PackageKit version: ${pk_ver}"
+
+    if version_gte "$pk_ver" "1.0.2" && version_lt "$pk_ver" "1.3.5"; then
+        add_finding "HIGH" "services" "CVE-2026-41651" "Pack2TheRoot: PackageKit local privilege escalation (${pk_ver})" \
+            "PackageKit ${pk_ver} is in the vulnerable upstream range for CVE-2026-41651, a D-Bus authorization flaw that can allow local users to install or alter packages as root." \
+            "pkcon install-local ./malicious-package.rpm" \
+            "PackageKit version=${pk_ver} ; packagekitd=${daemon_path} ; pkcon=${pkcon_path} ; packagekit.service=${service_state}" \
+            "Update PackageKit to >= 1.3.5 or a vendor package with the CVE-2026-41651 backport. If PackageKit is not required, disable packagekit.service and restrict local D-Bus policy." \
+            "https://github.com/PackageKit/PackageKit/security/advisories/GHSA-f55j-vvr9-69xv ; https://nvd.nist.gov/vuln/detail/CVE-2026-41651" \
+            "T1068"
     fi
 }

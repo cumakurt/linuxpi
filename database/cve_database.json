@@ -1,8 +1,8 @@
 {
   "_metadata": {
     "version": "1.0.0",
-    "last_updated": "2026-03-31",
-    "total_kernel_cves": 61,
+    "last_updated": "2026-06-03",
+    "total_kernel_cves": 68,
     "total_sudo_cves": 15,
     "total_polkit_cves": 5
   },
@@ -733,6 +733,145 @@
       "detection_method": "kernel_version",
       "description": "eBPF verifier conditional jump handling vulnerability",
       "tags": ["ebpf", "lpe"]
+    },
+    {
+      "cve_id": "CVE-2026-31431",
+      "name": "CopyFail - AF_ALG AEAD use-after-free",
+      "severity": "HIGH",
+      "cvss_score": 7.8,
+      "affected_kernels": [
+        {"min": "4.14.0", "max": "5.10.253"},
+        {"min": "5.11.0", "max": "5.15.203"},
+        {"min": "5.16.0", "max": "6.1.169"},
+        {"min": "6.2.0", "max": "6.6.136"},
+        {"min": "6.7.0", "max": "6.12.84"},
+        {"min": "6.13.0", "max": "6.18.21"},
+        {"min": "6.19.0", "max": "6.19.11"}
+      ],
+      "architectures": ["all"],
+      "distributions": ["all"],
+      "exploit_available": true,
+      "exploit_reliability": 0.80,
+      "exploit_url": "https://github.com/theori-io/copy-fail-CVE-2026-31431",
+      "detection_method": "kernel_version+af_alg_context",
+      "description": "AF_ALG algif_aead use-after-free enabling local root via AEAD crypto requests",
+      "tags": ["af_alg", "algif_aead", "uaf", "lpe", "2026"]
+    },
+    {
+      "cve_id": "CVE-2026-43284",
+      "name": "Dirty Frag - ESP/IP fragment reassembly UAF",
+      "severity": "HIGH",
+      "cvss_score": 7.8,
+      "affected_kernels": [
+        {"min": "4.11.0", "max": "5.10.254"},
+        {"min": "5.12.0", "max": "5.15.204"},
+        {"min": "5.16.0", "max": "6.1.170"},
+        {"min": "6.2.0", "max": "6.6.137"},
+        {"min": "6.7.0", "max": "6.12.86"},
+        {"min": "6.13.0", "max": "6.18.27"},
+        {"min": "7.0.0", "max": "7.0.4"}
+      ],
+      "architectures": ["all"],
+      "distributions": ["all"],
+      "exploit_available": true,
+      "exploit_reliability": 0.70,
+      "detection_method": "kernel_version+esp_context",
+      "description": "ESP/IP fragment reassembly use-after-free reachable from local namespace contexts",
+      "tags": ["esp", "xfrm", "fragmentation", "uaf", "lpe", "2026"]
+    },
+    {
+      "cve_id": "CVE-2026-43500",
+      "name": "Dirty Frag - RxRPC reassembly UAF",
+      "severity": "HIGH",
+      "cvss_score": 7.8,
+      "affected_kernels": [
+        {"min": "5.3.0", "max": "6.18.28"},
+        {"min": "6.19.0", "max": "7.0.5"}
+      ],
+      "architectures": ["all"],
+      "distributions": ["all"],
+      "exploit_available": true,
+      "exploit_reliability": 0.70,
+      "detection_method": "kernel_version+rxrpc_context",
+      "description": "RxRPC fragment reassembly use-after-free enabling local privilege escalation under reachable RxRPC contexts",
+      "tags": ["rxrpc", "fragmentation", "uaf", "lpe", "2026"]
+    },
+    {
+      "cve_id": "CVE-2026-46300",
+      "name": "Fragnesia - ESP-in-TCP UAF",
+      "severity": "HIGH",
+      "cvss_score": 7.8,
+      "affected_kernels": [
+        {"min": "3.9.0", "max": "5.10.257"},
+        {"min": "5.11.0", "max": "5.15.207"},
+        {"min": "5.16.0", "max": "6.1.173"},
+        {"min": "6.2.0", "max": "6.6.140"},
+        {"min": "6.7.0", "max": "6.12.90"},
+        {"min": "6.13.0", "max": "6.18.32"},
+        {"min": "6.19.0", "max": "7.0.9"}
+      ],
+      "architectures": ["all"],
+      "distributions": ["all"],
+      "exploit_available": true,
+      "exploit_reliability": 0.70,
+      "detection_method": "kernel_version+xfrm_context",
+      "description": "ESP-in-TCP/XFRM fragment handling use-after-free enabling local privilege escalation",
+      "tags": ["esp", "xfrm", "fragmentation", "uaf", "lpe", "2026"]
+    },
+    {
+      "cve_id": "CVE-2026-46333",
+      "name": "ssh-keysign-pwn - ptrace credential leak",
+      "severity": "HIGH",
+      "cvss_score": 7.8,
+      "affected_kernels": [
+        {"min": "5.6.0", "max": "5.10.255"},
+        {"min": "5.11.0", "max": "5.15.206"},
+        {"min": "5.16.0", "max": "6.1.172"},
+        {"min": "6.2.0", "max": "6.6.138"},
+        {"min": "6.7.0", "max": "6.12.88"},
+        {"min": "6.13.0", "max": "6.18.30"},
+        {"min": "6.19.0", "max": "7.0.7"}
+      ],
+      "architectures": ["all"],
+      "distributions": ["all"],
+      "exploit_available": true,
+      "exploit_reliability": 0.80,
+      "detection_method": "kernel_version+ptrace_context",
+      "description": "ptrace credential confusion with pidfd_getfd enabling SUID helper credential theft and local root",
+      "tags": ["ptrace", "pidfd_getfd", "ssh-keysign", "lpe", "2026"]
+    },
+    {
+      "cve_id": "CVE-2026-31635",
+      "name": "DirtyDecrypt - RxGK oversized authenticator",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_kernels": [
+        {"min": "6.16.0", "max": "6.18.22"},
+        {"min": "6.19.0", "max": "6.19.12"}
+      ],
+      "architectures": ["all"],
+      "distributions": ["all"],
+      "exploit_available": true,
+      "exploit_reliability": 0.50,
+      "exploit_url": "https://github.com/v12-security/pocs/tree/main/dirtydecrypt",
+      "detection_method": "kernel_version+rxgk_context",
+      "description": "RxGK/RxRPC oversized authenticator handling flaw with public PoC and privilege escalation research context",
+      "tags": ["rxrpc", "rxgk", "availability", "research", "2026"]
+    },
+    {
+      "cve_id": "CVE-2026-46243",
+      "name": "CIFSwitch - CIFS cifs.spnego upcall LPE",
+      "severity": "HIGH",
+      "cvss_score": 7.8,
+      "affected_kernels": [{"min": "2.6.0", "max": "999.999.999"}],
+      "architectures": ["all"],
+      "distributions": ["all"],
+      "exploit_available": true,
+      "exploit_reliability": 0.70,
+      "exploit_url": "https://github.com/manizada/CIFSwitch",
+      "detection_method": "cifs_module+cifs_upcall+request_key_rule",
+      "description": "CIFS kernel support, cifs.upcall and cifs.spnego request-key rule chain enabling local root command execution",
+      "tags": ["cifs", "cifs.upcall", "request-key", "lpe", "2026"]
     }
   ]
 }

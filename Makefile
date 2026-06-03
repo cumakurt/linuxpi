@@ -114,8 +114,11 @@ check:
 
 ## shellcheck: ShellCheck linting (requires: apt install shellcheck)
 shellcheck:
-	@command -v shellcheck >/dev/null 2>&1 || { echo "[WARN] shellcheck not installed"; exit 0; }
-	@shellcheck -e SC1090,SC1091,SC2034,SC2154 linuxpi.sh $(ALL_FILES) && echo "[+] ShellCheck passed"
+	@if command -v shellcheck >/dev/null 2>&1; then \
+		shellcheck -e SC1090,SC1091,SC2034,SC2154 linuxpi.sh $(ALL_FILES) && echo "[+] ShellCheck passed"; \
+	else \
+		echo "[WARN] shellcheck not installed"; \
+	fi
 
 ## install: Install to /usr/local/bin (requires root)
 install: standalone
@@ -132,6 +135,9 @@ clean:
 
 ## test: Run basic tests
 test: check
+	@echo "[*] Running unit tests..."
+	@bash tests/test_exploit_mode.sh
+	@bash tests/test_kernel_matching.sh
 	@echo "[*] Running basic functional test..."
 	@bash linuxpi.sh --help > /dev/null && echo "  [OK] --help works"
 	@bash linuxpi.sh -m kernel --no-color --quiet > /dev/null; echo "  [OK] kernel module runs (exit: $$?)"

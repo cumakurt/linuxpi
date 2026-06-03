@@ -43,6 +43,7 @@ _enum_kernel_modules() {
         "udf" "vfat" "fuse" "autofs" "isofs"
         "bluetooth" "bnep" "l2tp_core"
         "nf_tables" "xt_socket"
+        "af_alg" "algif_aead" "esp4" "esp6" "rxrpc" "cifs"
         "ip_tables" "ip6_tables"
         "wireguard" "openvpn"
     )
@@ -215,6 +216,197 @@ _enum_sysctl_security() {
 }
 
 # ──────────────────────────────────────────────────────────────
+# Kernel CVE helper functions
+# ──────────────────────────────────────────────────────────────
+_kernel_db_stream() {
+    local kernel_db="$1"
+
+    if [[ -f "$kernel_db" ]]; then
+        cat "$kernel_db"
+        return 0
+    fi
+
+    # Standalone builds embed the DB in KERNEL_DB_CONTENT instead of shipping
+    # modules/kernel/kernel_exploits.db next to the generated script.
+    if [[ -n "${KERNEL_DB_CONTENT:-}" ]]; then
+        printf '%s\n' "$KERNEL_DB_CONTENT"
+        return 0
+    fi
+
+    return 1
+}
+
+_kernel_version_in_affected_range() {
+    local kernel="$1"
+    local min_kernel="$2"
+    local max_kernel="$3"
+
+    min_kernel="$(trim "$min_kernel")"
+    max_kernel="$(trim "$max_kernel")"
+
+    [[ -z "$kernel" || -z "$min_kernel" || -z "$max_kernel" ]] && return 1
+    [[ "$min_kernel" == "-" || "$max_kernel" == "-" ]] && return 1
+
+    version_lte "$min_kernel" "$kernel" && version_lte "$kernel" "$max_kernel"
+}
+
+_kernel_sysctl_value() {
+    local param="$1"
+    local proc_path="/proc/sys/${param//./\/}"
+
+    if cmd_exists sysctl; then
+        sysctl -n "$param" 2>/dev/null && return 0
+    fi
+    [[ -r "$proc_path" ]] && cat "$proc_path" 2>/dev/null
+}
+
+_kernel_module_state() {
+    local mod="$1"
+
+    if [[ -d "/sys/module/${mod}" ]] || grep -q "^${mod} " /proc/modules 2>/dev/null; then
+        echo "loaded"
+        return
+    fi
+
+    if cmd_exists modinfo && safe_run 2 modinfo "$mod" &>/dev/null; then
+        echo "available"
+        return
+    fi
+
+    echo "absent"
+}
+
+_kernel_proc_crypto_contains() {
+    local pattern="$1"
+    [[ -r /proc/crypto ]] && grep -qi "$pattern" /proc/crypto 2>/dev/null && echo "yes" || echo "no"
+}
+
+_kernel_cmdline_blacklists() {
+    local initcall="$1"
+    grep -q "initcall_blacklist=[^ ]*${initcall}" /proc/cmdline 2>/dev/null && echo "yes" || echo "no"
+}
+
+_kernel_config_state() {
+    local sym="$1"
+    if declare -F _kernel_research_load_config &>/dev/null && declare -F _kernel_research_config_sym &>/dev/null; then
+        _kernel_research_load_config &>/dev/null || { echo "unknown"; return; }
+        _kernel_research_config_sym "$sym"
+        return
+    fi
+    echo "unknown"
+}
+
+_kernel_userns_context() {
+    local clone max_ns
+    clone="$(_kernel_sysctl_value kernel.unprivileged_userns_clone)"
+    max_ns="$(_kernel_sysctl_value user.max_user_namespaces)"
+    echo "kernel.unprivileged_userns_clone=${clone:-n/a}; user.max_user_namespaces=${max_ns:-n/a}"
+}
+
+_kernel_setuid_helper_summary() {
+    local helpers=()
+    local candidate
+
+    for candidate in \
+        /usr/bin/chage \
+        /usr/bin/pkexec \
+        /usr/lib/openssh/ssh-keysign \
+        /usr/libexec/openssh/ssh-keysign \
+        /usr/lib/accountsservice/accounts-daemon \
+        /usr/libexec/accountsservice/accounts-daemon; do
+        [[ -e "$candidate" ]] || continue
+        if is_suid "$candidate"; then
+            helpers+=("$(basename "$candidate"):suid")
+        elif [[ "$candidate" == *accounts-daemon && -x "$candidate" ]]; then
+            helpers+=("$(basename "$candidate"):root-helper")
+        fi
+    done
+
+    if [[ ${#helpers[@]} -gt 0 ]]; then
+        local IFS=','
+        echo "${helpers[*]}"
+    else
+        echo "none-observed"
+    fi
+}
+
+_kernel_request_key_rule_state() {
+    local f
+
+    for f in /etc/request-key.conf /etc/request-key.d/*.conf /usr/lib/request-key.d/*.conf /lib/request-key.d/*.conf; do
+        [[ -r "$f" ]] || continue
+        if grep -q 'cifs\.spnego' "$f" 2>/dev/null; then
+            echo "present:${f}"
+            return
+        fi
+    done
+
+    echo "absent"
+}
+
+_kernel_cve_exploit_reference() {
+    case "$1" in
+        CVE-2026-31431) echo "https://github.com/theori-io/copy-fail-CVE-2026-31431" ;;
+        CVE-2026-46243) echo "https://github.com/manizada/CIFSwitch" ;;
+        CVE-2026-31635) echo "https://github.com/v12-security/pocs/tree/main/dirtydecrypt" ;;
+        *)              echo "https://www.exploit-db.com/search?cve=$1" ;;
+    esac
+}
+
+_kernel_recent_cve_evidence() {
+    local cve_id="$1"
+    local kernel="$2"
+    local ev=""
+
+    case "$cve_id" in
+        CVE-2026-31431)
+            ev="CopyFail context: af_alg=$(_kernel_module_state af_alg), algif_aead=$(_kernel_module_state algif_aead), authenc_in_proc_crypto=$(_kernel_proc_crypto_contains 'authenc'), initcall_blacklist_algif_aead=$(_kernel_cmdline_blacklists algif_aead_init), initcall_blacklist_af_alg=$(_kernel_cmdline_blacklists af_alg_init)"
+            ;;
+        CVE-2026-43284)
+            ev="Dirty Frag ESP context: esp4=$(_kernel_module_state esp4), esp6=$(_kernel_module_state esp6), CONFIG_XFRM=$(_kernel_config_state CONFIG_XFRM), $(_kernel_userns_context)"
+            ;;
+        CVE-2026-43500)
+            ev="Dirty Frag RxRPC context: rxrpc=$(_kernel_module_state rxrpc), CONFIG_RXRPC=$(_kernel_config_state CONFIG_RXRPC), CONFIG_AF_RXRPC=$(_kernel_config_state CONFIG_AF_RXRPC), $(_kernel_userns_context)"
+            ;;
+        CVE-2026-46300)
+            ev="Fragnesia XFRM context: esp4=$(_kernel_module_state esp4), esp6=$(_kernel_module_state esp6), xfrm_user=$(_kernel_module_state xfrm_user), CONFIG_XFRM=$(_kernel_config_state CONFIG_XFRM), $(_kernel_userns_context)"
+            ;;
+        CVE-2026-46333)
+            local ptrace_scope pidfd_likely
+            ptrace_scope="$(_kernel_sysctl_value kernel.yama.ptrace_scope)"
+            version_gte "$kernel" "5.6.0" && pidfd_likely="yes" || pidfd_likely="no-or-backport-dependent"
+            ev="ssh-keysign-pwn context: ptrace_scope=${ptrace_scope:-n/a}, pidfd_getfd_likely=${pidfd_likely}, setuid_or_root_helpers=$(_kernel_setuid_helper_summary)"
+            ;;
+        CVE-2026-31635)
+            ev="DirtyDecrypt RxGK context: rxrpc=$(_kernel_module_state rxrpc), CONFIG_RXGK=$(_kernel_config_state CONFIG_RXGK), CONFIG_AF_RXRPC=$(_kernel_config_state CONFIG_AF_RXRPC)"
+            ;;
+    esac
+
+    [[ -n "$ev" ]] && echo "; ${ev}"
+}
+
+_kernel_recent_cve_remediation() {
+    case "$1" in
+        CVE-2026-31431)
+            echo " If patching is delayed, evaluate vendor-supported AF_ALG/algif_aead initcall blacklist mitigations; validate crypto workload impact."
+            ;;
+        CVE-2026-43284|CVE-2026-46300)
+            echo " If patching is delayed, block/unload esp4 and esp6 where IPsec is not required; otherwise disable unprivileged user namespaces per vendor guidance."
+            ;;
+        CVE-2026-43500)
+            echo " If patching is delayed, block/unload rxrpc where AFS/RxRPC is not required and disable unprivileged user namespaces where operationally safe."
+            ;;
+        CVE-2026-46333)
+            echo " If patching is delayed, set kernel.yama.ptrace_scope=2 or stricter and rotate SSH host keys/secrets if untrusted local users had access."
+            ;;
+        CVE-2026-31635)
+            echo " If CONFIG_RXGK/RxRPC is enabled and not required, disable the feature or unload rxrpc until the vendor kernel is patched."
+            ;;
+        *) echo "" ;;
+    esac
+}
+
+# ──────────────────────────────────────────────────────────────
 # CVE Matching
 # ──────────────────────────────────────────────────────────────
 _match_kernel_cves() {
@@ -226,8 +418,8 @@ _match_kernel_cves() {
     local found_count=0
 
     local kernel_db="${SCRIPT_DIR}/modules/kernel/kernel_exploits.db"
-    if [[ ! -f "$kernel_db" ]]; then
-        print_error "kernel_exploits.db not found at ${kernel_db}"
+    if ! _kernel_db_stream "$kernel_db" >/dev/null 2>&1; then
+        print_error "kernel_exploits.db not found at ${kernel_db} and no embedded database is available"
         return
     fi
 
@@ -241,7 +433,7 @@ _match_kernel_cves() {
         local clean_max
         clean_max=$(echo "$max_kernel" | tr -d ' ')
 
-        if version_lte "$clean_min" "$kernel" && version_lte "$kernel" "$clean_max"; then
+        if _kernel_version_in_affected_range "$kernel" "$clean_min" "$clean_max"; then
             local exploit_note=""
             [[ "$exploit_avail" == "true" ]] && exploit_note="${BOLD_GREEN}[Exploit Available]${RESET}" || exploit_note="${YELLOW}[No Public Exploit]${RESET}"
 
@@ -253,25 +445,33 @@ _match_kernel_cves() {
             echo -e "         CVSS: ${cvss} | ${exploit_note}"
 
             local exploit_cmd="-"
-            [[ "$exploit_avail" == "true" ]] && exploit_cmd="https://www.exploit-db.com/search?cve=${cve_id}"
+            [[ "$exploit_avail" == "true" ]] && exploit_cmd="$(_kernel_cve_exploit_reference "$cve_id")"
+
+            local recent_evidence recent_remediation
+            recent_evidence="$(_kernel_recent_cve_evidence "$cve_id" "$kernel")"
+            recent_remediation="$(_kernel_recent_cve_remediation "$cve_id")"
 
             add_finding "$severity" "kernel" "$cve_id" "${cve_id}: ${name}" \
                 "Kernel ${kernel} is vulnerable. ${desc}" \
                 "$exploit_cmd" \
-                "Kernel: ${kernel} (${SYSTEM_ARCH}) ; Affected range: ${clean_min} - ${clean_max} ; CVSS: ${cvss} ; Exploit available: ${exploit_avail}" \
-                "Update kernel to latest patched version. Apply vendor security patches." \
+                "Kernel: ${kernel} (${SYSTEM_ARCH}) ; Affected range: ${clean_min} - ${clean_max} ; CVSS: ${cvss} ; Exploit available: ${exploit_avail}${recent_evidence}" \
+                "Update kernel to latest patched version. Apply vendor security patches.${recent_remediation}" \
                 "https://nvd.nist.gov/vuln/detail/${cve_id}" \
                 "T1068"
 
             found_count=$(( found_count + 1 ))
         fi
-    done < "$kernel_db"
+    done < <(_kernel_db_stream "$kernel_db")
 
     if [[ $found_count -eq 0 ]]; then
         print_good "No known kernel CVEs matched for $kernel"
     else
         echo -e "\n  ${BOLD_RED}Total kernel CVEs matched: ${found_count}${RESET}"
     fi
+
+    # CIFSwitch requires a component chain rather than a reliable kernel-only
+    # version range while NVD enrichment is still pending.
+    _check_cifswitch
 
     # Polkit check
     _check_polkit
@@ -287,6 +487,40 @@ _match_kernel_cves() {
 
     # OpenSSH regreSSHion check
     _check_openssh_regresshion
+}
+
+# ──────────────────────────────────────────────────────────────
+# CIFSwitch CVE-2026-46243: CIFS cifs.spnego upcall LPE chain
+# ──────────────────────────────────────────────────────────────
+_check_cifswitch() {
+    local cifs_state upcall req_rule keyctl_state cifs_utils_ver userns_clone max_userns
+
+    cifs_state="$(_kernel_module_state cifs)"
+    upcall="$(command -v cifs.upcall 2>/dev/null || true)"
+    [[ -z "$upcall" && -x /usr/sbin/cifs.upcall ]] && upcall="/usr/sbin/cifs.upcall"
+    [[ -z "$upcall" && -x /sbin/cifs.upcall ]] && upcall="/sbin/cifs.upcall"
+
+    req_rule="$(_kernel_request_key_rule_state)"
+    cmd_exists keyctl && keyctl_state="present" || keyctl_state="absent"
+    cifs_utils_ver="$(pkg_version cifs-utils 2>/dev/null | head -1)"
+    [[ -z "$cifs_utils_ver" && -n "$upcall" ]] && cifs_utils_ver="installed-version-unknown"
+    userns_clone="$(_kernel_sysctl_value kernel.unprivileged_userns_clone)"
+    max_userns="$(_kernel_sysctl_value user.max_user_namespaces)"
+
+    [[ "$cifs_state" == "absent" || -z "$upcall" || "$req_rule" == "absent" ]] && return
+
+    local severity="HIGH"
+    if [[ "${userns_clone:-}" == "0" ]] && [[ "${max_userns:-0}" =~ ^[0-9]+$ ]] && [[ "${max_userns:-0}" -eq 0 ]]; then
+        severity="MEDIUM"
+    fi
+
+    add_finding "$severity" "kernel" "CVE-2026-46243" "CIFSwitch: CIFS cifs.spnego upcall LPE chain present" \
+        "CIFS kernel support, cifs.upcall, and a cifs.spnego request-key rule are present. This matches the known CVE-2026-46243 attack chain for root command execution via forged cifs.spnego key descriptions." \
+        "https://github.com/manizada/CIFSwitch" \
+        "cifs_module=${cifs_state} ; cifs.upcall=${upcall} ; cifs_utils=${cifs_utils_ver:-unknown} ; request_key_rule=${req_rule} ; keyctl=${keyctl_state} ; kernel.unprivileged_userns_clone=${userns_clone:-n/a} ; user.max_user_namespaces=${max_userns:-n/a}" \
+        "Apply the vendor kernel fix. If SMB/CIFS client access is not required, blocklist/unload cifs, remove cifs-utils, or disable the cifs.spnego request-key rule; keep SELinux/AppArmor enforcing and restrict local shell access." \
+        "https://access.redhat.com/security/vulnerabilities/RHSB-2026-005 ; https://nvd.nist.gov/vuln/detail/CVE-2026-46243" \
+        "T1068"
 }
 
 # ──────────────────────────────────────────────────────────────

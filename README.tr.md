@@ -35,8 +35,9 @@ linuxpi/
 ├── database/            # CVE, EPSS, GTFOBins veri tabanları
 ├── utils/               # Renkler, günlük, yardımcılar, argüman ayrıştırma
 ├── scripts/             # GTFOBins veritabanı üretim betiği
+├── tests/               # Exploit motoru ve kernel CVE eşleme testleri
 ├── output/templates/    # HTML rapor şablonu
-└── Makefile             # Derleme: standalone, minimal, full, dist
+└── Makefile             # Derleme, test, lint ve sürüm yardımcıları
 ```
 
 ## Özellikler
@@ -46,7 +47,7 @@ linuxpi/
 | Modül | Açıklama |
 |--------|-------------|
 | `user` | Kullanıcı bağlamı, grup üyelikleri, ayrıcalık analizi |
-| `kernel` | Çekirdek CVE (61+), sysctl, SMEP/SMAP/KASLR |
+| `kernel` | Çekirdek CVE (67+), sysctl, SMEP/SMAP/KASLR |
 | `sudo` | Sudo sürüm CVE, kurallar, NOPASSWD, Baron Samedit vb. |
 | `suid` | SUID/SGID tarama, GTFOBins eşlemesi, RPATH/RUNPATH |
 | `capabilities` | Linux capabilities (tehlikeli yetenekler) |
@@ -60,10 +61,27 @@ linuxpi/
 
 ### CVE veri tabanları
 
-- **61+ çekirdek CVE** (2010–2025): Dirty COW, Dirty Pipe, PwnKit, nf_tables UAF, io_uring, eBPF…
+- **67+ çekirdek CVE** (2010–2026): Dirty COW, Dirty Pipe, PwnKit, nf_tables UAF, io_uring, eBPF, CopyFail, Dirty Frag, CIFSwitch…
 - **15+ sudo CVE**: Baron Samedit, UID bypass, pwfeedback taşması…
-- **Polkit, glibc, snapd, runc** için özel kontroller
+- **Polkit, glibc, snapd, runc, PackageKit, CIFS/cifs.upcall** için özel kontroller
 - **GTFOBins** ([gtfobins.org](https://gtfobins.org/)): **sudo**, **SUID** ve **capabilities** için tekniklerin aynası; güncellemek için: `make update-gtfobins`
+
+### 2026 güncel LPE kapsamı
+
+LinuxPi, Mart-Haziran 2026 advisory döneminde yayımlanan yerel yetki yükseltme kontrollerini de içerir:
+
+| CVE / Ad | Tespit yöntemi |
+|----------|----------------|
+| `CVE-2026-31431` CopyFail | Kernel stable dal aralığı + AF_ALG / `algif_aead` bağlamı |
+| `CVE-2026-43284` Dirty Frag ESP | Kernel stable dal aralığı + ESP/XFRM ve user namespace bağlamı |
+| `CVE-2026-43500` Dirty Frag RxRPC | Kernel stable dal aralığı + RxRPC config/modül bağlamı |
+| `CVE-2026-46300` Fragnesia | Kernel stable dal aralığı + ESP/XFRM bağlamı |
+| `CVE-2026-46333` ssh-keysign-pwn | Kernel stable dal aralığı + ptrace ve SUID/root helper bağlamı |
+| `CVE-2026-31635` DirtyDecrypt | Kernel stable dal aralığı + RxRPC/RxGK bağlamı |
+| `CVE-2026-46243` CIFSwitch | CIFS modülü, `cifs.upcall`, `cifs.spnego` request-key zinciri |
+| `CVE-2026-41651` Pack2TheRoot | PackageKit sürümü ve servis/araç varlığı |
+
+Yeni kernel advisory’leri tek geniş min/max pencere yerine stable dal bazlı aralıklarla tutulur. Böylece yamalı stable sürümlerde yanlış pozitifler azalır; çalışma zamanı önkoşulları ise bulgu kanıtına eklenir.
 
 ### EPSS + CVSS öncelik skorlama
 
@@ -220,7 +238,19 @@ curl -sL https://example.com/linuxpi.sh | bash -s -- --minimal -f json
 
 - **Bash 4.0+**
 - **Temel araçlar**: `find`, `grep`, `awk`, `stat`, `id`
-- **İsteğe bağlı**: `jq`, `PyYAML` + `git` (`make update-gtfobins`), `curl`
+- **İsteğe bağlı**: `jq`, `PyYAML` + `git` (`make update-gtfobins`), `curl`, `shellcheck`
+
+## Geliştirme ve testler
+
+```bash
+make check                       # Bash sözdizimi doğrulaması
+make test                        # Sözdizimi + unit testler + temel fonksiyonel tarama
+make shellcheck                  # Opsiyonel lint; shellcheck yoksa uyarı verir
+bash tests/test_exploit_mode.sh
+bash tests/test_kernel_matching.sh
+```
+
+`make test`, exploit motoru testlerini ve kernel matcher sınır testlerini çalıştırır; ardından `--help` ve sessiz kernel taramasını doğrular.
 
 ## Lisans
 
